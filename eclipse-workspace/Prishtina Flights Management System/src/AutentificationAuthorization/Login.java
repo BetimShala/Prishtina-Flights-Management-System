@@ -107,12 +107,19 @@ public class Login extends JFrame {
 		contentPane.add(txtTemp);
 		txtTemp.setColumns(10);
 	
-		
+		JButton btnLogin = new JButton("Login");
 		txtPassword.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				
 				txtTemp.setText(txtPassword.getText());
+			}
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
+				{
+					btnLogin.doClick();
+				}
 			}
 		});
 
@@ -161,7 +168,7 @@ public class Login extends JFrame {
 		
 		
 		
-		JButton btnLogin = new JButton("Login");
+		
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
@@ -232,7 +239,7 @@ public class Login extends JFrame {
 							
 							String password = passi+String.valueOf(resz.getString("Salt"));
 							
-							boolean admin = rezu.getBoolean("Admin");
+//							boolean admin = rezu.getBoolean("Admin");
 							
 							byte[] byteSaltPassword = password.getBytes("UTF8");
 							byte[] byteSaltedHash = md.digest(byteSaltPassword);
