@@ -66,7 +66,7 @@ public class SignUp extends JFrame {
 	private JTextField txtAddress;
 	
 	String name="", surname="", tel="" , address="", username="", email="",password="",pass="",creditCard="";
-	int Shtesa, userRoleId=4;
+	int Shtesa, userRoleId=3;
 	MessageDigest md ;
 	
 	
