@@ -238,9 +238,7 @@ public class Login extends JFrame {
 							emailiii=rezu.getString("Email");
 							
 							String password = passi+String.valueOf(resz.getString("Salt"));
-							
-//							boolean admin = rezu.getBoolean("Admin");
-							
+														
 							byte[] byteSaltPassword = password.getBytes("UTF8");
 							byte[] byteSaltedHash = md.digest(byteSaltPassword);
 							byte[] encodedBytes = java.util.Base64.getEncoder().encode(byteSaltedHash);

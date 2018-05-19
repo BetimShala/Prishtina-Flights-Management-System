@@ -72,7 +72,6 @@ public class SignUp extends JFrame {
 	
 	static SignUp frame;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JTextField txtCreditCard;
 	/**
 	 * Launch the application.
 	 */
@@ -465,13 +464,13 @@ public class SignUp extends JFrame {
 		txtUsernameReg = new JTextField();
 		txtUsernameReg.setColumns(10);
 		txtUsernameReg.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		txtUsernameReg.setBounds(88, 63, 304, 23);
+		txtUsernameReg.setBounds(88, 84, 304, 37);
 		Identification.add(txtUsernameReg);
 		
 		txtEmailReg = new JTextField();
 		txtEmailReg.setColumns(10);
 		txtEmailReg.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		txtEmailReg.setBounds(88, 143, 304, 23);
+		txtEmailReg.setBounds(88, 173, 304, 37);
 		Identification.add(txtEmailReg);
 		
 		
@@ -479,89 +478,58 @@ public class SignUp extends JFrame {
 		
 		JLabel lblUsernameReg = new JLabel("Username");
 		lblUsernameReg.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 12));
-		lblUsernameReg.setBounds(88, 36, 129, 14);
+		lblUsernameReg.setBounds(88, 57, 129, 14);
 		Identification.add(lblUsernameReg);
 		
 		JLabel lblEmailReg = new JLabel("Email ");
 		lblEmailReg.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 12));
-		lblEmailReg.setBounds(88, 116, 129, 14);
+		lblEmailReg.setBounds(88, 146, 129, 14);
 		Identification.add(lblEmailReg);
 		
 		JLabel lblPasswordReg = new JLabel("Password");
 		lblPasswordReg.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 12));
-		lblPasswordReg.setBounds(88, 193, 129, 14);
+		lblPasswordReg.setBounds(88, 237, 129, 14);
 		Identification.add(lblPasswordReg);
-		
-		
-		JLabel lblCreditCard = new JLabel("Add a payment method");
-		lblCreditCard.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 12));
-		lblCreditCard.setBounds(88, 345, 157, 14);
-		Identification.add(lblCreditCard);
 		
 		JLabel lblConfirmPasswordReg = new JLabel("Confirm Password");
 		lblConfirmPasswordReg.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 12));
-		lblConfirmPasswordReg.setBounds(88, 269, 129, 14);
+		lblConfirmPasswordReg.setBounds(88, 329, 129, 14);
 		Identification.add(lblConfirmPasswordReg);
 		
 		txtPasswordReg = new JPasswordField();
 		txtPasswordReg.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		txtPasswordReg.setBounds(88, 220, 304, 23);
+		txtPasswordReg.setBounds(88, 264, 304, 37);
 		Identification.add(txtPasswordReg);
 		
 		txtRePasswordReg = new JPasswordField();
 		txtRePasswordReg.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		txtRePasswordReg.setBounds(88, 296, 304, 23);
+		txtRePasswordReg.setBounds(88, 356, 304, 36);
 		Identification.add(txtRePasswordReg);
 		
 		JLabel lblEmailVal = new JLabel("");
 		lblEmailVal.setForeground(Color.RED);
-		lblEmailVal.setBounds(88, 166, 333, 14);
+		lblEmailVal.setBounds(88, 210, 333, 14);
 		Identification.add(lblEmailVal);
 		
 		JLabel lblPasswordVal = new JLabel("");
 		lblPasswordVal.setForeground(Color.RED);
-		lblPasswordVal.setBounds(88, 242, 333, 14);
+		lblPasswordVal.setBounds(88, 302, 333, 14);
 		Identification.add(lblPasswordVal);
 		
 		JLabel lblRePasswordVal = new JLabel("");
 		lblRePasswordVal.setForeground(Color.RED);
-		lblRePasswordVal.setBounds(88, 318, 333, 14);
+		lblRePasswordVal.setBounds(88, 392, 333, 14);
 		Identification.add(lblRePasswordVal);
 		
 		JLabel lblUsernameVal = new JLabel("");
 		lblUsernameVal.setForeground(Color.RED);
-		lblUsernameVal.setBounds(88, 89, 333, 14);
+		lblUsernameVal.setBounds(88, 119, 333, 14);
 		Identification.add(lblUsernameVal);
 		
 		JLabel lblCreditCardVal = new JLabel("");
 		lblCreditCardVal.setForeground(Color.RED);
 		lblCreditCardVal.setBounds(88, 392, 333, 14);
 		Identification.add(lblCreditCardVal);
-		
-		JCheckBox chckbxNotNow = new JCheckBox("Not now");
-		chckbxNotNow.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
-				if(chckbxNotNow.isSelected())
-				{
-					txtCreditCard.setEditable(false);
-					lblCreditCard.setForeground(Color.GRAY);
-				}
-				else
-				{
-					txtCreditCard.setEditable(true);
-					lblCreditCard.setForeground(Color.BLACK);
-				}
-			}
-		});
-		chckbxNotNow.setBackground(Color.WHITE);
-		chckbxNotNow.setBounds(315, 402, 75, 25);
-		Identification.add(chckbxNotNow);
-		
-		txtCreditCard = new JTextField();
-		txtCreditCard.setColumns(10);
-		txtCreditCard.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		txtCreditCard.setBounds(88, 370, 304, 23);
-		Identification.add(txtCreditCard);
 		
 
 		JButton btnRegister = new JButton("Register");
@@ -572,7 +540,7 @@ public class SignUp extends JFrame {
 		Identification.add(btnRegister);
 		
 		
-		String birthday = cmbDay.getSelectedItem().toString()+"/"+(cmbMonth.getSelectedIndex()+1)+"/"+cmbYear.getSelectedItem().toString();
+		
 		
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
@@ -879,53 +847,12 @@ public class SignUp extends JFrame {
 					password = pass;
 				}
 				
-				if(chckbxNotNow.isSelected())
-				{
-					creditCard = "default";
-				}
-				else
-				{
-					if(txtCreditCard.getText().equals(""))
-					{
-						txtCreditCard.setBorder(new MatteBorder(0, 0, 1, 0, Color.red));
-						lblCreditCardVal.setText("* You can't leave this empty.");
-					}
-					else
-					{
-						txtCreditCard.setBorder(new LineBorder(Color.GREEN));
-						lblCreditCardVal.setText("");
-						
-						creditCard = txtCreditCard.getText();
-						
-						try {
-							md = MessageDigest.getInstance("SHA1");
-						} catch (NoSuchAlgorithmException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
-						try 
-						  {
-							byte[] byteCreditCard = creditCard.getBytes("UTF8");
-							byte[] byteSaltedHashC = md.digest(byteCreditCard);
-							byte[] encodedBytes = java.util.Base64.getEncoder().encode(byteSaltedHashC);
-							creditCard=new String(encodedBytes);
-							
-						  } 
-						  catch (UnsupportedEncodingException e1)
-						  {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-							
-						  }
-					}
-					
-				}
+				String birthday = cmbDay.getSelectedItem().toString()+"/"+(cmbMonth.getSelectedIndex()+1)+"/"+cmbYear.getSelectedItem().toString();
 				
 				//String name="", surname="", tel="" , address="", username="", email="",pass="";
-				if( !(name.equals(""))&& !(surname.equals("")) && !(tel.equals("")) && !(address.equals("")) && !(email.equals("")) && !(username.equals("")) && !(pass.equals("")) && !(password.equals("")) && !(creditCard.equals("")))
+				if( !(name.equals(""))&& !(surname.equals("")) && !(tel.equals("")) && !(address.equals("")) && !(email.equals("")) && !(username.equals("")) && !(pass.equals("")) && !(password.equals("")))
 				{
-					String inserto = "{call shtoUser('"+username+"','"+name+"','"+surname+"','"+tel+"','"+birthday+"','"+address+"','"+email+"','"+userRoleId+"','"+Shtesa+"','"+password+"','"+creditCard+"')}";
+					String inserto = "{call shtoUser('"+username+"','"+name+"','"+surname+"','"+tel+"','"+birthday+"','"+address+"','"+email+"','"+userRoleId+"','"+Shtesa+"','"+password+"')}";
 					try {
 						CallableStatement insert = DBconn.prepareCall(inserto);
 						insert.execute();
