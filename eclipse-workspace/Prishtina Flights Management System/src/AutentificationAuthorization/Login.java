@@ -54,13 +54,16 @@ public class Login extends JFrame {
 	private JTextField txtTemp;
 	
 	String useri = "", passi = "";
-	static String name ="" , surname="";
+	public static String name ="" , surname="";
 	MessageDigest md ;
 	static String gjuha="English";
 	
-	static String useriii = "";
-	static String teliii="";
-	static String emailiii="";
+	public static int id;
+	public static String useriii = "";
+	public static String teliii="";
+	public static String emailiii="";
+	public static String birthday="";
+	public static String adresa= "";
 	/**
 	 * Launch the application.
 	 */
@@ -229,6 +232,7 @@ public class Login extends JFrame {
 					try {
 						if(rezu.next() && resz.next())
 						{
+							id= rezu.getInt("Id");
 							
 							name = rezu.getString("Emri");
 							surname = rezu.getString("Mbiemri");
@@ -236,6 +240,9 @@ public class Login extends JFrame {
 							useriii=rezu.getString("Username");
 							teliii=rezu.getString("NrTel");
 							emailiii=rezu.getString("Email");
+							
+							birthday = rezu.getString("Birthday");
+							adresa = rezu.getString("Adresa");
 							
 							String password = passi+String.valueOf(resz.getString("Salt"));
 														

@@ -464,13 +464,13 @@ public class SignUp extends JFrame {
 		txtUsernameReg = new JTextField();
 		txtUsernameReg.setColumns(10);
 		txtUsernameReg.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		txtUsernameReg.setBounds(88, 84, 304, 37);
+		txtUsernameReg.setBounds(88, 94, 304, 27);
 		Identification.add(txtUsernameReg);
 		
 		txtEmailReg = new JTextField();
 		txtEmailReg.setColumns(10);
 		txtEmailReg.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		txtEmailReg.setBounds(88, 173, 304, 37);
+		txtEmailReg.setBounds(88, 183, 304, 27);
 		Identification.add(txtEmailReg);
 		
 		
@@ -478,32 +478,32 @@ public class SignUp extends JFrame {
 		
 		JLabel lblUsernameReg = new JLabel("Username");
 		lblUsernameReg.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 12));
-		lblUsernameReg.setBounds(88, 57, 129, 14);
+		lblUsernameReg.setBounds(88, 67, 129, 14);
 		Identification.add(lblUsernameReg);
 		
 		JLabel lblEmailReg = new JLabel("Email ");
 		lblEmailReg.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 12));
-		lblEmailReg.setBounds(88, 146, 129, 14);
+		lblEmailReg.setBounds(88, 156, 129, 14);
 		Identification.add(lblEmailReg);
 		
 		JLabel lblPasswordReg = new JLabel("Password");
 		lblPasswordReg.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 12));
-		lblPasswordReg.setBounds(88, 237, 129, 14);
+		lblPasswordReg.setBounds(88, 247, 129, 14);
 		Identification.add(lblPasswordReg);
 		
 		JLabel lblConfirmPasswordReg = new JLabel("Confirm Password");
 		lblConfirmPasswordReg.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 12));
-		lblConfirmPasswordReg.setBounds(88, 329, 129, 14);
+		lblConfirmPasswordReg.setBounds(88, 338, 129, 14);
 		Identification.add(lblConfirmPasswordReg);
 		
 		txtPasswordReg = new JPasswordField();
 		txtPasswordReg.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		txtPasswordReg.setBounds(88, 264, 304, 37);
+		txtPasswordReg.setBounds(88, 274, 304, 27);
 		Identification.add(txtPasswordReg);
 		
 		txtRePasswordReg = new JPasswordField();
 		txtRePasswordReg.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		txtRePasswordReg.setBounds(88, 356, 304, 36);
+		txtRePasswordReg.setBounds(88, 365, 304, 27);
 		Identification.add(txtRePasswordReg);
 		
 		JLabel lblEmailVal = new JLabel("");
