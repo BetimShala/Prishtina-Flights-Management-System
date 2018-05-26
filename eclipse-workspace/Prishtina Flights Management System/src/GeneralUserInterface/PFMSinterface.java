@@ -161,6 +161,8 @@ public class PFMSinterface extends JFrame {
 		
 		PFMAccountManagment pnlAccountManagment = new PFMAccountManagment();
 		
+		UsersPanel usersPanel = new UsersPanel();
+		
 		lblAccount.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -170,6 +172,14 @@ public class PFMSinterface extends JFrame {
 			}
 		});
 		
+		lblUsers.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				pnlWorking.add(usersPanel, BorderLayout.CENTER);
+				pnlWorking.validate();
+				pnlWorking.repaint();
+			}
+		});
 		
 		
 	}

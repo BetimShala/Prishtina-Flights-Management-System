@@ -256,8 +256,12 @@ public class Login extends JFrame {
 							CallableStatement userandpass = DBconn.prepareCall(uandp);
 							ResultSet rezi = userandpass.executeQuery();
 						
-							
-							if(rezi.first())
+							if(rezi.first() && rezi.getBoolean("CreatedByAdmin"))
+							{
+								ForgotPassword forgotPassword = new ForgotPassword();
+								forgotPassword.setVisible(true);
+							}
+							else if(rezi.first())
 							{
 								PFMSinterface pfms = new PFMSinterface();
 								pfms.setVisible(true);
