@@ -126,7 +126,7 @@ public class ArrivalsPanel extends JPanel {
 		
 		txtFrom = new JTextField();
 		txtFrom.setBounds(10, 594, 156, 32);
-		 add(txtFrom);
+		add(txtFrom);
 		txtFrom.setColumns(10);
 		
 		JLabel lblAirline = new JLabel("Airline Name");

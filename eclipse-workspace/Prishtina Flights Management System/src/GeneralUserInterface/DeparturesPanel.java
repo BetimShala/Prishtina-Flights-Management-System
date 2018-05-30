@@ -119,7 +119,7 @@ public class DeparturesPanel extends JPanel {
 		JButton btnAdd = new JButton("Add");
 		
 		btnAdd.setBounds(1316, 619, 174, 32);
-		 add(btnAdd);
+		add(btnAdd);
 		
 		JLabel lblTo = new JLabel("To");
 		lblTo.setFont(new Font("Tahoma", Font.PLAIN, 18));
