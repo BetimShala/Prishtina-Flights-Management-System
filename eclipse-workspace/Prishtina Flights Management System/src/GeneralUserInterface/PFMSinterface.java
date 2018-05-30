@@ -16,6 +16,10 @@ import org.jdesktop.swingx.prompt.PromptSupport;
 import AutentificationAuthorization.Login;
 import SharedPackage.DBconnection;
 import SharedPackage.EmailSender;
+import chat.Client;
+import chat.StartClientSocketThread;
+import chat.StartServerSocketThread;
+import chat.Server;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -42,6 +46,7 @@ import java.awt.Font;
 public class PFMSinterface extends JFrame {
 
 	private JPanel contentPane;
+	private JPanel pnlWorking;
 	
 	MessageDigest md ;
 
@@ -52,7 +57,7 @@ public class PFMSinterface extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PFMSinterface frame = new PFMSinterface();
+					PFMSinterface frame = new PFMSinterface("Firstname", "Lastname", 0);
 					frame.setVisible(true);
 					frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 				} catch (Exception e) {
@@ -65,7 +70,7 @@ public class PFMSinterface extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PFMSinterface() {
+	public PFMSinterface(String firstname, String lastname, int role) {
 		
 		Connection DBconn = DBconnection.sqlConnector();
 		
@@ -93,7 +98,7 @@ public class PFMSinterface extends JFrame {
 		lblNewLabel_1.setBounds(472, 173, 116, 45);
 		pnlHeader.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Kastriot Dobratiqi");
+		JLabel lblNewLabel_2 = new JLabel(firstname + " " + lastname);
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setBounds(1557, 173, 197, 45);
 		pnlHeader.add(lblNewLabel_2);
@@ -132,6 +137,13 @@ public class PFMSinterface extends JFrame {
 		lblUsers.setPreferredSize(new Dimension(290, 100));
 		pnlNav.add(lblUsers);
 		
+		JLabel lblChat = new JLabel("Chat");
+		lblChat.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblChat.setForeground(Color.WHITE);
+		lblChat.setHorizontalAlignment(SwingConstants.CENTER);
+		lblChat.setPreferredSize(new Dimension(290, 100));
+		pnlNav.add(lblChat);
+		
 		JPanel pnlFund = new JPanel();
 		pnlFund.setLayout(new BoxLayout(pnlFund,BoxLayout.Y_AXIS));
 		pnlFund.setBackground(new Color(0, 102, 153));
@@ -153,7 +165,7 @@ public class PFMSinterface extends JFrame {
 		lblHelp.setMaximumSize(new Dimension(290, 100));
 		pnlFund.add(lblHelp);
 	
-		JPanel pnlWorking = new JPanel();
+		pnlWorking = new JPanel();
 		pnlWorking.setBackground(Color.WHITE);
 		pnlWorking.setBounds(310, 231, 1592, 773);
 		contentPane.add(pnlWorking);
@@ -178,6 +190,21 @@ public class PFMSinterface extends JFrame {
 				pnlWorking.add(usersPanel, BorderLayout.CENTER);
 				pnlWorking.validate();
 				pnlWorking.repaint();
+			}
+		});
+		
+		lblChat.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("Role: " + role);
+
+//				if (role == 3) {
+					Thread clientSocketThread = new Thread(new StartClientSocketThread("Betim", "Shala"));
+					clientSocketThread.start();
+//				}else {
+//					Thread serverSocketThread = new Thread(new StartServerSocketThread());
+//					serverSocketThread.start();
+//				}
 			}
 		});
 		

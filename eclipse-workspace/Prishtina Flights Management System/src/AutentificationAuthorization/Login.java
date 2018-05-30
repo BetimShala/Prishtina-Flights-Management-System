@@ -64,6 +64,7 @@ public class Login extends JFrame {
 	public static String emailiii="";
 	public static String birthday="";
 	public static String adresa= "";
+	public static int roli;
 	/**
 	 * Launch the application.
 	 */
@@ -240,7 +241,7 @@ public class Login extends JFrame {
 							useriii=rezu.getString("Username");
 							teliii=rezu.getString("NrTel");
 							emailiii=rezu.getString("Email");
-							
+							roli = rezu.getInt("UserRoleId");
 							birthday = rezu.getString("Birthday");
 							adresa = rezu.getString("Adresa");
 							
@@ -263,7 +264,7 @@ public class Login extends JFrame {
 							}
 							else if(rezi.first())
 							{
-								PFMSinterface pfms = new PFMSinterface();
+								PFMSinterface pfms = new PFMSinterface(name, surname, roli);
 								pfms.setVisible(true);
 								pfms.setExtendedState(pfms.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 								
