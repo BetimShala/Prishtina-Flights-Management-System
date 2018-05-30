@@ -198,13 +198,13 @@ public class PFMSinterface extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("Role: " + role);
 
-//				if (role == 3) {
+				if (role == 3) {
 					Thread clientSocketThread = new Thread(new StartClientSocketThread("Betim", "Shala"));
 					clientSocketThread.start();
-//				}else {
-//					Thread serverSocketThread = new Thread(new StartServerSocketThread());
-//					serverSocketThread.start();
-//				}
+				}else {
+					Thread serverSocketThread = new Thread(new StartServerSocketThread());
+					serverSocketThread.start();
+				}
 			}
 		});
 		
