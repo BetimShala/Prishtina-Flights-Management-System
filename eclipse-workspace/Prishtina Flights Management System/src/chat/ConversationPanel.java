@@ -1,15 +1,20 @@
-package chat;
+package src.chat;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+
+import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 
 public class ConversationPanel extends JPanel {
-	JTextArea textArea;
+	JPanel pnlChat;
 	JButton sendButton;
 	JTextArea sendTextArea;
+	JScrollPane scrollPaneOfTextArea;
 	
 	private JScrollPane scrollPaneOfSend;
 	
@@ -17,12 +22,14 @@ public class ConversationPanel extends JPanel {
 		setBounds(0, 0, 422, 330);
 		setLayout(null);
 		
-		JScrollPane scrollPaneOfTextArea = new JScrollPane();
+		scrollPaneOfTextArea = new JScrollPane();
 		scrollPaneOfTextArea.setBounds(0, 0, 422, 281);
 		add(scrollPaneOfTextArea);
 		
-		textArea = new JTextArea();
-		scrollPaneOfTextArea.setViewportView(textArea);
+		pnlChat = new JPanel();
+		pnlChat.setLayout(null);
+		pnlChat.setBackground(Color.WHITE);
+		scrollPaneOfTextArea.setViewportView(pnlChat);
 		
 		sendButton = new JButton("Send");
 		sendButton.setBounds(333, 307, 89, 23);
