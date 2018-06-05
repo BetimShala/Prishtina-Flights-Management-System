@@ -73,16 +73,15 @@ public class Client {
 			});
 			clientFrame.conversationPanel.sendButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					try {
-						
-						msgout = clientFirstname +" " + clientLastname + ": " + 
-								clientFrame.conversationPanel.sendTextArea.getText();
-						dataOut.writeUTF(msgout);
-						appendMessage(msgout, new RightArrowBubble(), new FlowLayout(FlowLayout.RIGHT));	
-						clientFrame.conversationPanel.sendTextArea.setText("");
-						
-					} catch (IOException e) {
-						e.printStackTrace();
+					if (!clientFrame.conversationPanel.sendTextArea.getText().equals("")) {
+						try {
+							msgout = clientFirstname +" " + clientLastname + ": " + clientFrame.conversationPanel.sendTextArea.getText();
+							dataOut.writeUTF(msgout);
+							appendMessage(msgout, new RightArrowBubble(), new FlowLayout(FlowLayout.RIGHT));	
+							clientFrame.conversationPanel.sendTextArea.setText("");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			});
@@ -129,7 +128,10 @@ public class Client {
 		
 		JLabel lblTime = new JLabel(sdf.format(cal.getTime()));
 		lblTime.setFont(new Font("TimesRoman", Font.PLAIN, 10));
-		JLabel lblMessage = new JLabel(message.split(":")[1]);
+		
+		JLabel lblMessage = new JLabel("<html><body width='150px'><p>" + message.split(":")[1] + "</p></body></html>");
+		lblMessage.setSize(lblMessage.getPreferredSize());
+		
 		JLabel lblName = new JLabel(message.split(":")[0]);
 		lblName.setFont(new Font("TimesRoman", Font.PLAIN, 12));
 
@@ -143,7 +145,7 @@ public class Client {
 		pnlNameHolder.add(lblName);
 		
 		JPanel pnlMessageHolder = new JPanel();
-		pnlMessageHolder.setBounds(12, y, 380, 40);
+		pnlMessageHolder.setBounds(12, y, 380, lblMessage.getHeight() + 20);
 		pnlMessageHolder.setLayout(fl);
 		pnlMessageHolder.setBackground(Color.WHITE);
 		
@@ -172,10 +174,10 @@ public class Client {
 		
 		clientFrame.conversationPanel.pnlChat.add(pnlMessageHolder);
 		clientFrame.conversationPanel.pnlChat.add(pnlNameHolder);
-		clientFrame.conversationPanel.pnlChat.setPreferredSize(
-				new Dimension(0, 100 * clientFrame.conversationPanel.pnlChat.getComponents().length));
+		clientFrame.conversationPanel.pnlChat.setPreferredSize(new Dimension(0, 100 * clientFrame.conversationPanel.pnlChat.getComponents().length));
+		clientFrame.conversationPanel.scrollPaneOfTextArea.repaint();
 		clientFrame.conversationPanel.scrollPaneOfTextArea.getViewport().revalidate();
 		
-		y = y + 60;
+		y = y + 20 + lblMessage.getHeight();
 	}
 }

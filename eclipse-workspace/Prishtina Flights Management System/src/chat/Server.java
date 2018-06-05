@@ -75,7 +75,6 @@ public class Server {
 
 class ClientHandler implements Runnable {
 	private Socket clientSocket;
-//	private JPanel containerPanel;
 	private ConversationPanel conversationPanel;
 	private JPanel pnlScrollPane;
 	private JLabel clientNameLabel;
@@ -118,14 +117,15 @@ class ClientHandler implements Runnable {
 		
 		conversationPanel.sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					msgout = "PFMS Agent: " + conversationPanel.sendTextArea.getText();
-					dataOut.writeUTF(msgout);	
-					//conversationPanel.textArea.append("PFMS Agent: " + conversationPanel.sendTextArea.getText() + "\n");
-					appendMessage(msgout, new RightArrowBubble(), new FlowLayout(FlowLayout.RIGHT));
-					conversationPanel.sendTextArea.setText("");
-				} catch (IOException e) {
-					e.printStackTrace();
+				if (!conversationPanel.sendTextArea.getText().equals("")) {
+					try {
+						msgout = "PFMS Agent: " + conversationPanel.sendTextArea.getText();
+						dataOut.writeUTF(msgout);	
+						appendMessage(msgout, new RightArrowBubble(), new FlowLayout(FlowLayout.RIGHT));
+						conversationPanel.sendTextArea.setText("");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		});
@@ -133,15 +133,15 @@ class ClientHandler implements Runnable {
 		while (true) {
 			try {
 				message = dataIn.readUTF();
-				//conversationPanel.textArea.append(message + "\n");
 				
-				if(message.startsWith("ip,")){
+				if(message.startsWith("ip,")) {
 					String clientIpAddress = message.split(",")[1];
 					String clientName = message.split(",")[2];
 					Server_f udpServerFrame = new Server_f(clientIpAddress, clientName);
 					udpServerFrame.setVisible(true);
-				}else{	
+				} else {	
 					appendMessage(message, new LeftArrowBubble(), new FlowLayout(FlowLayout.LEFT));
+					
 					if (firstMessage) {
 						clientNameLabel.setText(message.split(":")[0]); 
 						//= new JLabel(message.split(":")[0]);
@@ -173,7 +173,10 @@ class ClientHandler implements Runnable {
 		
 		JLabel lblTime = new JLabel(sdf.format(cal.getTime()));
 		lblTime.setFont(new Font("TimesRoman", Font.PLAIN, 10));
-		JLabel lblMessage = new JLabel(message.split(":")[1]);
+		
+		JLabel lblMessage = new JLabel("<html><body width='150px'><p>" + message.split(":")[1] + "</p></body></html>");
+		lblMessage.setSize(lblMessage.getPreferredSize());
+		
 		JLabel lblName = new JLabel(message.split(":")[0]);
 		lblName.setFont(new Font("TimesRoman", Font.PLAIN, 12));
 
@@ -187,7 +190,7 @@ class ClientHandler implements Runnable {
 		pnlNameHolder.add(lblName);
 		
 		JPanel pnlMessageHolder = new JPanel();
-		pnlMessageHolder.setBounds(12, y, 380, 40);
+		pnlMessageHolder.setBounds(12, y, 380, lblMessage.getHeight() + 20);
 		pnlMessageHolder.setLayout(fl);
 		pnlMessageHolder.setBackground(Color.WHITE);
 		
@@ -218,11 +221,11 @@ class ClientHandler implements Runnable {
 		
 		conversationPanel.pnlChat.add(pnlMessageHolder);
 		conversationPanel.pnlChat.add(pnlNameHolder);
-		conversationPanel.pnlChat.setPreferredSize(
-				new Dimension(0, 100 * conversationPanel.pnlChat.getComponents().length));
+		conversationPanel.pnlChat.setPreferredSize(new Dimension(0, 100 * conversationPanel.pnlChat.getComponents().length));
+		conversationPanel.scrollPaneOfTextArea.repaint();
 		conversationPanel.scrollPaneOfTextArea.getViewport().revalidate();
 		
-		y = y + 60;
+		y = y + 20 + lblMessage.getHeight();
 	}
 	
 }
