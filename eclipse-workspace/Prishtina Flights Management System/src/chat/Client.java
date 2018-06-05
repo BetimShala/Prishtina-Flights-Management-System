@@ -1,4 +1,4 @@
-package src.chat;
+package chat;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -7,15 +7,21 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.swing.GroupLayout;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -35,6 +41,7 @@ public class Client {
 	
 	public Client(String clientFirstname, String clientLastname) {
 		clientFrame = new ClientFrame();
+		clientFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		clientFrame.setVisible(true);
 		
 		this.clientFirstname = clientFirstname;
@@ -47,11 +54,23 @@ public class Client {
 	}
 	
 	public void initiateSocketConnection() {
+		
 		try {
-			socket = new Socket("192.168.0.107", 8888);
+			socket = new Socket("localhost", 8888);
 			dataIn = new DataInputStream(socket.getInputStream());
 			dataOut = new DataOutputStream(socket.getOutputStream());
 			
+			clientFrame.addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosing(WindowEvent e) {
+					super.windowClosing(e);
+					try {
+						socket.close();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
 			clientFrame.conversationPanel.sendButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					try {
@@ -89,8 +108,16 @@ public class Client {
 				appendMessage(message, new LeftArrowBubble(), new FlowLayout(FlowLayout.LEFT));		
 			}
 			
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (ConnectException e) {
+			JOptionPane.showMessageDialog(null, "There is no PFMS agent available at the moment, please try again later!");
+			clientFrame.dispatchEvent(new WindowEvent(clientFrame, WindowEvent.WINDOW_CLOSING));
+		} 
+		catch (SocketException e) {
+			
+		}
+		catch (IOException e1) {
+			JOptionPane.showMessageDialog(null, "There are some techincal problems with your communication. Please try again later!");
+			clientFrame.dispatchEvent(new WindowEvent(clientFrame, WindowEvent.WINDOW_CLOSING));
 		}
 
 	}

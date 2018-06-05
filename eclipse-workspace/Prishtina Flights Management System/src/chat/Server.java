@@ -1,4 +1,4 @@
-package src.chat;
+package chat;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -36,6 +36,7 @@ public class Server {
 			public void run() {
 				try {
 					serverFrame = new ServerFrame();
+					serverFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 					serverFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -65,7 +66,7 @@ public class Server {
 				Thread thread = new Thread(clientHandler);
 				thread.start();
 			} catch (IOException e) {
-				System.out.println("Here!!");
+				e.printStackTrace();
 			}
 		}
 	}
@@ -102,7 +103,7 @@ class ClientHandler implements Runnable {
 			dataIn = new DataInputStream(clientSocket.getInputStream());
 			dataOut = new DataOutputStream(clientSocket.getOutputStream());
 		} catch (IOException e) {
-			System.out.println("Over here!!");
+			e.printStackTrace();
 		}
 		
 		clientNameLabel.addMouseListener(new MouseAdapter() {
