@@ -10,12 +10,14 @@ import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -27,6 +29,7 @@ public class Client {
 	private String message, msgout;
 	private String clientFirstname;
 	private String clientLastname;
+	private String address;
 	
 	int y = 30;
 	
@@ -45,7 +48,7 @@ public class Client {
 	
 	public void initiateSocketConnection() {
 		try {
-			socket = new Socket("localhost", 8888);
+			socket = new Socket("192.168.0.107", 8888);
 			dataIn = new DataInputStream(socket.getInputStream());
 			dataOut = new DataOutputStream(socket.getOutputStream());
 			
@@ -58,6 +61,22 @@ public class Client {
 						dataOut.writeUTF(msgout);
 						appendMessage(msgout, new RightArrowBubble(), new FlowLayout(FlowLayout.RIGHT));	
 						clientFrame.conversationPanel.sendTextArea.setText("");
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			
+			
+			clientFrame.btnCallPfmsAgent.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						address = InetAddress.getLocalHost().getHostAddress();
+						dataOut.writeUTF("ip," + address + "," + clientFirstname + " " + clientLastname);
+						
+						Client_f udpClientFrame = new Client_f();
+						udpClientFrame.setVisible(true);
 						
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -110,21 +129,19 @@ public class Client {
 			pnlMessageHolder.add(msgPanel);
 		}
 		
-		
-		
 		msgPanelLayout.setHorizontalGroup(
 				msgPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-	            .addGroup(msgPanelLayout.createSequentialGroup()
-	                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	            	.addGroup(msgPanelLayout.createSequentialGroup()
+	            	.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 	                .addComponent(lblMessage)
 	                .addGap(25, 25, 25))
-	        );
+				);
 		msgPanelLayout.setVerticalGroup(
 				msgPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-	            .addGroup(msgPanelLayout.createSequentialGroup()
+				.addGroup(msgPanelLayout.createSequentialGroup()
 	                .addComponent(lblMessage)
 	                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-	        );
+				);
 		
 		clientFrame.conversationPanel.pnlChat.add(pnlMessageHolder);
 		clientFrame.conversationPanel.pnlChat.add(pnlNameHolder);

@@ -24,7 +24,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 
-
 public class Server {
 	private ServerFrame serverFrame;
 	
@@ -43,8 +42,8 @@ public class Server {
 				}
 			}
 		});
-		
 		listenForSocketConnections();
+
 	}
 	
 	public static void main(String[] args) {
@@ -134,15 +133,22 @@ class ClientHandler implements Runnable {
 			try {
 				message = dataIn.readUTF();
 				//conversationPanel.textArea.append(message + "\n");
-				appendMessage(message, new LeftArrowBubble(), new FlowLayout(FlowLayout.LEFT));
 				
-				if (firstMessage) {
-					clientNameLabel.setText(message.split(":")[0]); 
-					//= new JLabel(message.split(":")[0]);
-					pnlScrollPane.add(clientNameLabel);
-					pnlScrollPane.repaint();
-					pnlScrollPane.validate();
-					firstMessage = false;
+				if(message.startsWith("ip,")){
+					String clientIpAddress = message.split(",")[1];
+					String clientName = message.split(",")[2];
+					Server_f udpServerFrame = new Server_f(clientIpAddress, clientName);
+					udpServerFrame.setVisible(true);
+				}else{	
+					appendMessage(message, new LeftArrowBubble(), new FlowLayout(FlowLayout.LEFT));
+					if (firstMessage) {
+						clientNameLabel.setText(message.split(":")[0]); 
+						//= new JLabel(message.split(":")[0]);
+						pnlScrollPane.add(clientNameLabel);
+						pnlScrollPane.repaint();
+						pnlScrollPane.validate();
+						firstMessage = false;
+					}
 				}
 			} catch (IOException e) {
 				System.out.println("Client left..");

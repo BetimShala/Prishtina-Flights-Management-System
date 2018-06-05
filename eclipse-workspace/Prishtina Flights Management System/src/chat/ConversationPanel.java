@@ -32,7 +32,7 @@ public class ConversationPanel extends JPanel {
 		scrollPaneOfTextArea.setViewportView(pnlChat);
 		
 		sendButton = new JButton("Send");
-		sendButton.setBounds(333, 307, 89, 23);
+		sendButton.setBounds(325, 294, 89, 36);
 		add(sendButton);
 		
 		scrollPaneOfSend = new JScrollPane();
