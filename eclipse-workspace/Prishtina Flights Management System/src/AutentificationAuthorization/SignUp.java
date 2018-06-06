@@ -75,7 +75,7 @@ public class SignUp extends JFrame {
 	static SignUp frame;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	/**
-	 * Launch the application.
+	 * Launch the applicatiion.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

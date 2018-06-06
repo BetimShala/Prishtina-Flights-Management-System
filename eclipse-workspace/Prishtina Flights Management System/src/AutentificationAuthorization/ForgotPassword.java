@@ -65,6 +65,7 @@ public class ForgotPassword extends JFrame {
 	         
 	         String id=emailid;             
 	         String[] to={id}; 
+	         //new email
 	         if(EmailSender.sendMail("noreply.pfms@gmail.com","pfmsproject2018","Use this code to reset your password "+code+" . Do not forward or give this code to anyone.\n\n The PFMS-PROJECT Accounts Team " ,to,"Change your password!"))
 		     	{
 		             

@@ -85,7 +85,7 @@ public class Login extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the freame.
 	 */
 	public Login() {
 		Image icon = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
