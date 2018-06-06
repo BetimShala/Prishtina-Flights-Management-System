@@ -30,11 +30,13 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.JTextComponent;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -80,8 +82,10 @@ public class UsersPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public UsersPanel() {
-		setPreferredSize(new Dimension(1592, 770));
+		setSize(1560, 720);
 		setLayout(null);
+		setBackground(Color.WHITE);
+		setBorder(new LineBorder(new Color(0, 102, 153), 10));
 		
 		try {
 			connection = DBconnection.sqlConnector();
@@ -93,16 +97,32 @@ public class UsersPanel extends JPanel {
 		}
 		
 		JLabel lblKerko = new JLabel("Search:");
-		lblKerko.setBounds(16, 16, 60, 29);
-		lblKerko.setFont(new Font("Segoi UI", Font.PLAIN, 16));
+		lblKerko.setBounds(28, 38, 66, 25);
+		lblKerko.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblKerko);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(16, 49, 1400, 188);
+		scrollPane.setBounds(20, 80, 1520, 487);
+		scrollPane.setBorder(null);
 		add(scrollPane);
 		
 		table = new JTable();
 		table.setFocusable(false);
+		table.setShowVerticalLines(false);
+		table.setOpaque(true);
+		
+		table.setFillsViewportHeight(true);
+		table.setBackground(Color.WHITE);
+		
+		JTableHeader header = table.getTableHeader();
+		header.setBackground(Color.WHITE);
+		header.setFont(new Font("Tahoma",Font.PLAIN,17));
+		
+		//DefaultTableModel model=(DefaultTableModel)tblArrivals.getModel();
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setRowHeight(20);
+		
+		
 		table.setModel(DbUtils.resultSetToTableModel(resultSet));
 		
 		try {
@@ -123,7 +143,7 @@ public class UsersPanel extends JPanel {
 		
 		txtKerko = new JTextField("");
 		txtKerko.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		txtKerko.setBounds(77, 16, 141, 26);
+		txtKerko.setBounds(106, 35, 424, 32);
 		add(txtKerko);
 		txtKerko.setColumns(10);
 		txtKerko.addKeyListener(new KeyAdapter() {
@@ -144,19 +164,19 @@ public class UsersPanel extends JPanel {
 		
 		txtFirstname = new JTextField("");
 		txtFirstname.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		txtFirstname.setBounds(-62, 364, 116, 26);
+		txtFirstname.setBounds(20, 638, 116, 26);
 		txtFirstname.setColumns(10);
 		add(txtFirstname);
 		
 		txtLastname = new JTextField("");
 		txtLastname.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		txtLastname.setBounds(62, 364, 130, 26);
+		txtLastname.setBounds(178, 638, 116, 26);
 		txtLastname.setColumns(10);
 		add(txtLastname);
 		
 		txtEmail = new JTextField("");
 		txtEmail.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		txtEmail.setBounds(200, 364, 95, 26);
+		txtEmail.setBounds(330, 638, 138, 26);
 		txtEmail.setColumns(10);
 		add(txtEmail);
 		String emailPattern = "[a-zA-Z]{1}[a-zA-Z0-9]{1,20}[.]{0,1}[-]{0,1}[_]{0,1}[a-zA-Z0-9]{1,20}" + 
@@ -172,13 +192,13 @@ public class UsersPanel extends JPanel {
 		
 		txtUsername = new JTextField("");
 		txtUsername.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		txtUsername.setBounds(303, 364, 96, 26);
+		txtUsername.setBounds(506, 638, 138, 26);
 		txtUsername.setColumns(10);
 		add(txtUsername);
 
 		txtPhone = new JTextField("");
 		txtPhone.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		txtPhone.setBounds(407, 364, 95, 26);
+		txtPhone.setBounds(685, 638, 138, 26);
 		txtPhone.setColumns(10);
 		add(txtPhone);
 		txtPhone.addKeyListener(new KeyAdapter() {
@@ -199,21 +219,21 @@ public class UsersPanel extends JPanel {
 		
 		txtAddress = new JTextField("");
 		txtAddress.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		txtAddress.setBounds(510, 364, 95, 26);
+		txtAddress.setBounds(869, 638, 144, 26);
 		txtAddress.setColumns(10);
 		add(txtAddress);
 		
 		txtBirthday = new JTextField("");
 		txtBirthday.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		txtBirthday.setBounds(613, 364, 95, 26);
+		txtBirthday.setBounds(1056, 638, 121, 26);
 		txtBirthday.setColumns(10);
 		add(txtBirthday);
 		
-		JButton btnAdd = new JButton("Add Worker");
-		btnAdd.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		JButton btnAdd = new JButton("Add ");
+		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAdd.setForeground(Color.WHITE);
 		btnAdd.setBackground(new Color(0, 102, 153));
-		btnAdd.setBounds(859, 363, 133, 29);
+		btnAdd.setBounds(1385, 642, 133, 29);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!checkIfNull(txtFirstname.getText(), txtLastname.getText(), txtEmail.getText(), txtUsername.getText(), txtPhone.getText(), txtAddress.getText(), txtBirthday.getText(), cmbRole.getSelectedItem())) {
@@ -238,7 +258,7 @@ public class UsersPanel extends JPanel {
 								callableStatement.setString(7, txtAddress.getText());
 								callableStatement.setString(8, txtEmail.getText());
 								callableStatement.setString(9, cmbRole.getSelectedItem().toString());
-								callableStatement.execute();
+								System.out.println(callableStatement.execute());
 								
 								callableStatement = connection.prepareCall("{call GetAllUsers()}");
 								callableStatement.execute();
@@ -304,43 +324,43 @@ public class UsersPanel extends JPanel {
 		add(btnAdd);		
 		
 		JLabel lblFirstname = new JLabel("Firstname");
-		lblFirstname.setBounds(-62, 341, 95, 15);
-		lblFirstname.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblFirstname.setBounds(20, 605, 85, 25);
+		lblFirstname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblFirstname);
 		
 		JLabel lblLastname = new JLabel("Lastname");
-		lblLastname.setBounds(62, 341, 95, 15);
-		lblLastname.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblLastname.setBounds(178, 606, 103, 22);
+		lblLastname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblLastname);
 		
 		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setBounds(200, 341, 72, 15);
-		lblEmail.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblEmail.setBounds(330, 606, 112, 22);
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblEmail);
 		
 		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setBounds(303, 341, 85, 15);
-		lblUsername.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblUsername.setBounds(503, 605, 103, 25);
+		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblUsername);
 		
 		JLabel lblPhone = new JLabel("Phone");
-		lblPhone.setBounds(407, 341, 72, 15);
-		lblPhone.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblPhone.setBounds(685, 608, 60, 22);
+		lblPhone.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblPhone);
 		
 		JLabel lblAddress = new JLabel("Address");
-		lblAddress.setBounds(510, 341, 95, 15);
-		lblAddress.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblAddress.setBounds(869, 606, 121, 22);
+		lblAddress.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblAddress);
 		
 		JLabel lblBirthday = new JLabel("Birthday");
-		lblBirthday.setBounds(613, 341, 59, 15);
-		lblBirthday.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblBirthday.setBounds(1056, 606, 121, 22);
+		lblBirthday.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblBirthday);
 		
 		JLabel lblRoli = new JLabel("Role");
-		lblRoli.setBounds(712, 341, 66, 15);
-		lblRoli.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblRoli.setBounds(1218, 610, 66, 15);
+		lblRoli.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblRoli);
 		
 		lblMistake = new JLabel("Mistake Message");
@@ -349,7 +369,7 @@ public class UsersPanel extends JPanel {
 		
 		cmbRole = new JComboBox();
 		cmbRole.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		cmbRole.setBounds(712, 364, 85, 27);
+		cmbRole.setBounds(1218, 638, 85, 27);
 		cmbRole.setModel(new DefaultComboBoxModel(new String[] {"S", "F"}));
 		add(cmbRole);
 		lblMistake.setForeground(new Color(255, 0, 0));
@@ -358,8 +378,8 @@ public class UsersPanel extends JPanel {
 		add(lblMistake);
 		
 		JButton btnFshij = new JButton("Delete");
-		btnFshij.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnFshij.setBounds(859, 16, 75, 29);
+		btnFshij.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnFshij.setBounds(1437, 23, 103, 32);
 		btnFshij.setForeground(Color.WHITE);
 		btnFshij.setBackground(new Color(0, 102, 153));
 		btnFshij.addActionListener(new ActionListener() {
@@ -397,10 +417,10 @@ public class UsersPanel extends JPanel {
 		add(btnFshij);
 		
 		JButton btnRuaj = new JButton("Edit");
-		btnRuaj.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		btnRuaj.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnRuaj.setForeground(Color.WHITE);
 		btnRuaj.setBackground(new Color(0, 102, 153));
-		btnRuaj.setBounds(761, 16, 85, 29);
+		btnRuaj.setBounds(1321, 23, 103, 32);
 		btnRuaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = table.getSelectedRow();
@@ -422,9 +442,11 @@ public class UsersPanel extends JPanel {
 		});
 		add(btnRuaj);
 		
-		JButton btnPastroFushat = new JButton("");
-		btnPastroFushat.setIcon(new ImageIcon("C:\\Users\\Gentris\\Downloads\\clear-button.png"));
-		btnPastroFushat.setBounds(807, 278, 133, 29);
+		JButton btnPastroFushat = new JButton("Clean");
+		btnPastroFushat.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnPastroFushat.setBackground(new Color(0, 102, 153));
+		btnPastroFushat.setForeground(Color.WHITE);
+		btnPastroFushat.setBounds(1385, 605, 133, 29);
 		btnPastroFushat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				updateModeEnable = false;

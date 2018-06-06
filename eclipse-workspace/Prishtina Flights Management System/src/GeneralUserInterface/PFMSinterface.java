@@ -48,6 +48,16 @@ public class PFMSinterface extends JFrame {
 	private JPanel contentPane;
 	private JPanel pnlWorking;
 	
+	private int id;
+	private String firstname;
+	private String lastname;
+	private String nrTel;
+	private String birthday;
+	private String adresa;
+	private String email;
+	private String username;
+	private int role;
+	
 	MessageDigest md ;
 
 	/**
@@ -57,7 +67,7 @@ public class PFMSinterface extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PFMSinterface frame = new PFMSinterface("Firstname", "Lastname", 0);
+					PFMSinterface frame = new PFMSinterface(0,"Firstname", "Lastname", "0","14/02/2017","Adresa","kastro","kastriot",1);
 					frame.setVisible(true);
 					frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 				} catch (Exception e) {
@@ -70,7 +80,7 @@ public class PFMSinterface extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PFMSinterface(String firstname, String lastname, int role) {
+	public PFMSinterface(int id, String firstname, String lastname, String nrTel, String birthday, String adresa, String email, String username, int role) {
 		
 		Connection DBconn = DBconnection.sqlConnector();
 		
@@ -89,24 +99,39 @@ public class PFMSinterface extends JFrame {
 		pnlHeader.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Arrivals");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(341, 173, 119, 45);
 		pnlHeader.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Departures");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_1.setForeground(Color.WHITE);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(472, 173, 116, 45);
 		pnlHeader.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel(firstname + " " + lastname);
+		lblNewLabel_2.setForeground(Color.WHITE);
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setBounds(1557, 173, 197, 45);
+		lblNewLabel_2.setBounds(1444, 173, 310, 45);
 		pnlHeader.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Log Out");
+		lblNewLabel_3.setForeground(Color.WHITE);
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setBounds(1754, 173, 119, 45);
 		pnlHeader.add(lblNewLabel_3);
+		
+		JLabel lblPfms = new JLabel("PFMS");
+		lblPfms.setForeground(Color.WHITE);
+		lblPfms.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 60));
+		lblPfms.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPfms.setBounds(12, 13, 359, 127);
+		pnlHeader.add(lblPfms);
 		
 		JPanel pnlNav = new JPanel();
 		pnlNav.setBackground(new Color(0, 102, 153));
@@ -168,17 +193,57 @@ public class PFMSinterface extends JFrame {
 		pnlWorking = new JPanel();
 		pnlWorking.setBackground(Color.WHITE);
 		pnlWorking.setBounds(310, 231, 1592, 773);
+		pnlWorking.setBackground(new Color(0, 102, 153));
 		contentPane.add(pnlWorking);
 		pnlWorking.setLayout(new BorderLayout());
 		
-		PFMAccountManagment pnlAccountManagment = new PFMAccountManagment();
+		PFMAccountManagment pnlAccountManagment = new PFMAccountManagment(id,firstname,lastname,nrTel,birthday,adresa,username,email);
 		
 		UsersPanel usersPanel = new UsersPanel();
+		
+		ArrivalsPanel pnlArrivals = new ArrivalsPanel();
+		
+		pnlWorking.add(pnlArrivals);
+		pnlWorking.validate();
+		pnlWorking.repaint();
+		
+		DeparturesPanel pnlDepartures = new DeparturesPanel();
 		
 		lblAccount.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				pnlWorking.removeAll();
 				pnlWorking.add(pnlAccountManagment, BorderLayout.CENTER);
+				pnlWorking.validate();
+				pnlWorking.repaint();
+			}
+		});
+		
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				pnlWorking.removeAll();
+				pnlWorking.add(pnlArrivals, BorderLayout.CENTER);
+				pnlWorking.validate();
+				pnlWorking.repaint();
+			}
+		});
+		
+		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				pnlWorking.removeAll();
+				pnlWorking.add(pnlDepartures, BorderLayout.CENTER);
+				pnlWorking.validate();
+				pnlWorking.repaint();
+			}
+		});
+		
+		lblHome.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				pnlWorking.removeAll();
+				pnlWorking.add(pnlArrivals, BorderLayout.CENTER);
 				pnlWorking.validate();
 				pnlWorking.repaint();
 			}
@@ -187,6 +252,7 @@ public class PFMSinterface extends JFrame {
 		lblUsers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				pnlWorking.removeAll();
 				pnlWorking.add(usersPanel, BorderLayout.CENTER);
 				pnlWorking.validate();
 				pnlWorking.repaint();

@@ -10,8 +10,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
-import org.jdatepicker.JDatePicker;
+//import org.jdatepicker.JDatePicker;
 import org.jdesktop.swingx.prompt.PromptSupport;
 
 import net.proteanit.sql.*;
@@ -80,18 +81,21 @@ public class ArrivalsPanel extends JPanel {
 	public ArrivalsPanel() {
 		conn=DBconnection.sqlConnector();
 		
-		setSize(1050, 650);
+		setSize(1560, 720);
 		setLayout(null);
+		setBackground(Color.WHITE);
+		setBorder(new LineBorder(new Color(0, 102, 153), 10));
+		
+		
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 		
 		
 		JScrollPane spArrivals = new JScrollPane();
 		spArrivals.setBorder(null);
-		spArrivals.setBounds(0, 59, 1500, 487);
+		spArrivals.setBounds(20, 80, 1520, 487);
 		add(spArrivals);
 		//spArrivals.setBackground(Color.RED);
-		
-		
-		
 		
 		tblArrivals = new JTable();
 		//tblArrivals.setGridColor(new Color(165,32,38));
@@ -104,6 +108,10 @@ public class ArrivalsPanel extends JPanel {
 		tblArrivals.setFillsViewportHeight(true);
 		tblArrivals.setBackground(Color.WHITE);
 		
+		JTableHeader header = tblArrivals.getTableHeader();
+		header.setBackground(Color.WHITE);
+		header.setFont(new Font("Tahoma",Font.PLAIN,17));
+		
 		//DefaultTableModel model=(DefaultTableModel)tblArrivals.getModel();
 		tblArrivals.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		tblArrivals.setRowHeight(20);
@@ -114,176 +122,197 @@ public class ArrivalsPanel extends JPanel {
 		tblArrivals.setDefaultRenderer(Object.class, defaultTableCellRenderer);
 		spArrivals.setViewportView(tblArrivals);
 		
-		JButton btnAdd = new JButton("Add");
-		
-		btnAdd.setBounds(1316, 619, 174, 32);
-		 add(btnAdd);
-		
-		JLabel lblFrom = new JLabel("From");
-		lblFrom.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblFrom.setBounds(10, 557, 46, 14);
-		 add(lblFrom);
-		
-		txtFrom = new JTextField();
-		txtFrom.setBounds(10, 594, 156, 32);
-		add(txtFrom);
-		txtFrom.setColumns(10);
-		
-		JLabel lblAirline = new JLabel("Airline Name");
-		lblAirline.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblAirline.setBounds(186, 553, 137, 22);
-		 add(lblAirline);
-		
-		JLabel lblFlightNr = new JLabel("Flight No.");
-		lblFlightNr.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblFlightNr.setBounds(364, 557, 112, 22);
-		 add(lblFlightNr);
-		
-		txtFlightNr = new JTextField();
-		txtFlightNr.setColumns(10);
-		txtFlightNr.setBounds(364, 594, 156, 32);
-		 add(txtFlightNr);
-		
-		JLabel lblGate = new JLabel("Gate");
-		lblGate.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblGate.setBounds(543, 557, 46, 14);
-		 add(lblGate);
-		
-		txtGate = new JTextField();
-		txtGate.setColumns(10);
-		txtGate.setBounds(543, 594, 156, 32);
-		 add(txtGate);
-		
-		JLabel lblStatus = new JLabel("Status");
-		lblStatus.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblStatus.setBounds(723, 553, 103, 22);
-		 add(lblStatus);
-		
 		JButton btnEdit = new JButton("Edit");
+		btnEdit.setBackground(new Color(0, 102, 153));
+		btnEdit.setForeground(Color.WHITE);
+		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
-		btnEdit.setBounds(1274, 23, 103, 32);
+		btnEdit.setBounds(1321, 23, 103, 32);
 		 add(btnEdit);
 		
 		JButton btnDelete = new JButton("Delete");
-		btnDelete.setBounds(1387, 23, 103, 32);
+		btnDelete.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnDelete.setForeground(Color.WHITE);
+		btnDelete.setBackground(new Color(0, 102, 153));
+		btnDelete.setBounds(1437, 23, 103, 32);
 		 add(btnDelete);
 		
 		textField = new JTextField();
 		textField.setColumns(10);
-		textField.setBounds(108, 23, 200, 25);
+		textField.setBounds(106, 23, 424, 32);
 		 add(textField);
 		
 		JLabel lblSearch = new JLabel("Search");
 		lblSearch.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblSearch.setBounds(10, 26, 56, 16);
+		lblSearch.setBounds(38, 32, 56, 16);
 		 add(lblSearch);
-		
-		JButton btnClean = new JButton("Clean");
-
-		btnClean.setBounds(1316, 579, 174, 32);
-		 add(btnClean);
-		
-		cmbAirline = new JComboBox();
-		cmbAirline.setBounds(186, 594, 156, 32);
-		 add(cmbAirline);
-		
-		cmbStatuses = new JComboBox();
-		cmbStatuses.setSelectedIndex(-1);
-		cmbStatuses.setBounds(723, 594, 156, 32);
-		 add(cmbStatuses);
-		
-		JLabel lblSelectDate = new JLabel("Select Date");
-		lblSelectDate.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblSelectDate.setBounds(907, 553, 121, 22);
-		 add(lblSelectDate);
-		
-		dateChooser = new JDateChooser();
-		dateChooser.setDateFormatString("yyyy-dd-MM");
-		dateChooser.setBounds(907, 594, 137, 32);
-		 add(dateChooser);
-		
-		JLabel lblSelectTime = new JLabel("Select Time");
-		lblSelectTime.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblSelectTime.setBounds(1074, 557, 121, 22);
-		 add(lblSelectTime);
 		
 
 		Date date = new Date();
 		SpinnerDateModel sm = new SpinnerDateModel(date,null,null,Calendar.HOUR_OF_DAY);
-	    spinner = new JSpinner(sm);
-		spinner.setBounds(1074, 594, 149, 32);
+		
+		JPanel pnlCRUD = new JPanel();
+		pnlCRUD.setBackground(Color.WHITE);
+		pnlCRUD.setBounds(20, 569, 1520, 112);
+		add(pnlCRUD);
+		pnlCRUD.setLayout(null);
+		
+		JLabel lblFrom = new JLabel("From");
+		lblFrom.setBounds(12, 34, 46, 14);
+		pnlCRUD.add(lblFrom);
+		lblFrom.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		txtFrom = new JTextField();
+		txtFrom.setBounds(12, 65, 156, 32);
+		pnlCRUD.add(txtFrom);
+		txtFrom.setColumns(10);
+		
+		JLabel lblAirline = new JLabel("Airline Name");
+		lblAirline.setBounds(197, 30, 137, 22);
+		pnlCRUD.add(lblAirline);
+		lblAirline.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		cmbAirline = new JComboBox();
+		cmbAirline.setBounds(197, 65, 156, 32);
+		pnlCRUD.add(cmbAirline);
+		
+		JLabel lblFlightNr = new JLabel("Flight No.");
+		lblFlightNr.setBounds(384, 30, 112, 22);
+		pnlCRUD.add(lblFlightNr);
+		lblFlightNr.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		txtFlightNr = new JTextField();
+		txtFlightNr.setBounds(384, 65, 156, 32);
+		pnlCRUD.add(txtFlightNr);
+		txtFlightNr.setColumns(10);
+		
+		txtGate = new JTextField();
+		txtGate.setBounds(568, 65, 156, 32);
+		pnlCRUD.add(txtGate);
+		txtGate.setColumns(10);
+		
+		JLabel lblGate = new JLabel("Gate");
+		lblGate.setBounds(568, 34, 46, 14);
+		pnlCRUD.add(lblGate);
+		lblGate.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		cmbStatuses = new JComboBox();
+		cmbStatuses.setBounds(755, 65, 156, 32);
+		pnlCRUD.add(cmbStatuses);
+		cmbStatuses.setSelectedIndex(-1);
+		
+		JLabel lblStatus = new JLabel("Status");
+		lblStatus.setBounds(755, 30, 103, 22);
+		pnlCRUD.add(lblStatus);
+		lblStatus.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		dateChooser = new JDateChooser();
+		dateChooser.setBounds(938, 65, 137, 32);
+		pnlCRUD.add(dateChooser);
+		dateChooser.setDateFormatString("yyyy-dd-MM");
+		
+		JLabel lblSelectDate = new JLabel("Select Date");
+		lblSelectDate.setBounds(938, 30, 121, 22);
+		pnlCRUD.add(lblSelectDate);
+		lblSelectDate.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		spinner = new JSpinner(sm);
+		spinner.setBounds(1106, 65, 149, 32);
+		pnlCRUD.add(spinner);
 		
 		JSpinner.DateEditor de = new JSpinner.DateEditor(spinner,"HH:mm:ss");
 		spinner.setEditor(de);
-		add(spinner);
-
-	
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
-		btnAdd.addActionListener(new ActionListener() {
+		
+		JLabel lblSelectTime = new JLabel("Select Time");
+		lblSelectTime.setBounds(1104, 30, 121, 22);
+		pnlCRUD.add(lblSelectTime);
+		lblSelectTime.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		JButton btnClean = new JButton("Clean");
+		btnClean.setBounds(1311, 26, 174, 32);
+		pnlCRUD.add(btnClean);
+		btnClean.setForeground(Color.WHITE);
+		btnClean.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnClean.setBackground(new Color(0, 102, 153));
+		
+		JButton btnAdd = new JButton("Add");
+		btnAdd.setBounds(1311, 64, 174, 32);
+		pnlCRUD.add(btnAdd);
+		btnAdd.setBackground(new Color(0, 102, 153));
+		btnAdd.setForeground(Color.WHITE);
+		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+				btnAdd.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) 
+					{
+						if(editMode==false)
+						{
+							btnAdd.setText("Add");
+		
+							if(!txtFrom.getText().equals("") && !txtFlightNr.getText().equals("") &&
+									!txtGate.getText().equals("") && cmbAirline.getSelectedIndex()!=-1 && 
+									cmbStatuses.getSelectedIndex()!=-1 && !((JTextField)dateChooser.getDateEditor().getUiComponent()).getText().equals(""))
+							{
+								//JOptionPane.showMessageDialog(null,df.format(dateChooser.getDate()));
+								try {
+		
+		
+									
+									String airID="select id from airline where airline = '"+cmbAirline.getSelectedItem().toString()+"'";
+									pst=conn.prepareStatement(airID);
+									int ida=0;
+									res=pst.executeQuery();
+									while(res.next())
+									{
+										ida=res.getRow();
+									}
+									String sql="insert into arrivals values (default,'"+txtFrom.getText()+"','"+df.format(dateChooser.getDate())+"',"
+														+ "'"+sdf.format(spinner.getValue())+"',"
+																+ ""+ida+","+txtFlightNr.getText()+","+txtGate.getText()+","
+																		+ "'"+cmbStatuses.getSelectedItem().toString()+"')";
+															pst=conn.prepareStatement(sql);
+															pst.execute();
+															pst.close();
+															updateTable();
+															cleanFields();
+															
+									}
+								catch (Exception e2) {
+															e2.printStackTrace();;
+														}
+							}
+								
+							else 
+							{
+									JOptionPane.showMessageDialog(null,"Please fill all text fields");
+							}
+						}
+						else if(editMode==true)
+						{
+							
+							String updateArrival = "{call UpdateArrivals('"+idOfArrivals+"','"+txtFrom.getText()+"'"
+									+ ",'"+df.format(dateChooser.getDate())+"','"+sdf.format(spinner.getValue())+"','"+txtFlightNr.getText()+"','"+txtGate.getText()+"','"+cmbStatuses.getSelectedItem().toString()+"')}";
+							try {
+								CallableStatement UA = conn.prepareCall(updateArrival);
+								UA.execute();
+								updateTable();
+								cleanFields();
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+										
+					}
+				});
+		btnClean.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) 
 			{
-				if(editMode==false)
-				{
-					btnAdd.setText("Add");
-
-					if(!txtFrom.getText().equals("") && !txtFlightNr.getText().equals("") &&
-							!txtGate.getText().equals("") && cmbAirline.getSelectedIndex()!=-1 && 
-							cmbStatuses.getSelectedIndex()!=-1 && !((JTextField)dateChooser.getDateEditor().getUiComponent()).getText().equals(""))
-					{
-						//JOptionPane.showMessageDialog(null,df.format(dateChooser.getDate()));
-						try {
-
-
-							
-							String airID="select id from airline where airline = '"+cmbAirline.getSelectedItem().toString()+"'";
-							pst=conn.prepareStatement(airID);
-							int ida=0;
-							res=pst.executeQuery();
-							while(res.next())
-							{
-								ida=res.getRow();
-							}
-							String sql="insert into arrivals values (default,'"+txtFrom.getText()+"','"+df.format(dateChooser.getDate())+"',"
-												+ "'"+sdf.format(spinner.getValue())+"',"
-														+ ""+ida+","+txtFlightNr.getText()+","+txtGate.getText()+","
-																+ "'"+cmbStatuses.getSelectedItem().toString()+"')";
-													pst=conn.prepareStatement(sql);
-													pst.execute();
-													pst.close();
-													updateTable();
-													cleanFields();
-													
-							}
-						catch (Exception e2) {
-													e2.printStackTrace();;
-												}
-					}
-						
-					else 
-					{
-							JOptionPane.showMessageDialog(null,"Please fill all text fields");
-					}
-				}
-				else if(editMode==true)
-				{
-					
-					String updateArrival = "{call UpdateArrivals('"+idOfArrivals+"','"+txtFrom.getText()+"'"
-							+ ",'"+df.format(dateChooser.getDate())+"','"+sdf.format(spinner.getValue())+"','"+txtFlightNr.getText()+"','"+txtGate.getText()+"','"+cmbStatuses.getSelectedItem().toString()+"')}";
-					try {
-						CallableStatement UA = conn.prepareCall(updateArrival);
-						UA.execute();
-						updateTable();
-						cleanFields();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-								
+				cleanFields();
+				btnAdd.setText("Add");
 			}
 		});
+
 		
 		btnEdit.addMouseListener(new MouseAdapter() {
 			@Override
@@ -316,14 +345,6 @@ public class ArrivalsPanel extends JPanel {
 					}
 				}
 				
-			}
-		});
-		btnClean.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) 
-			{
-				cleanFields();
-				btnAdd.setText("Add");
 			}
 		});
 		//JOptionPane.showMessageDialog(null,sdf.format(spinner.getValue()));
@@ -408,8 +429,8 @@ public class ArrivalsPanel extends JPanel {
 		try 
 		{
 			
-			String sql="SELECT arrivals.id as 'ID' ,arrivals.from as 'FROM' , airline.airline as 'AIRLINE' ,arrivals.date as 'DATE' ,arrivals.time as 'TIME,"
-					+ "arrivals.flightNr as 'FLIGHT #,arrivals.gate as 'GATE' ,arrivals.status as 'STATUS' \r\n" + 
+			String sql="SELECT arrivals.id as 'ID', arrivals.from as 'FROM', airline.airline as 'AIRLINE', arrivals.date as 'DATE', arrivals.time as 'TIME',"
+					+ "arrivals.flightNr as 'FLIGHT', arrivals.gate as 'GATE', arrivals.status as 'STATUS' \r\n" + 
 					"FROM arrivals\r\n" + 
 					"INNER JOIN airline ON arrivals.airlineId=airline.id";
 			pst=conn.prepareStatement(sql);

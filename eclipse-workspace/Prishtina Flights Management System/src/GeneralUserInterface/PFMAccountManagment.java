@@ -47,6 +47,8 @@ public class PFMAccountManagment extends JPanel {
 	public JButton btnSaveChangesPI;
 	public JButton btnSaveChangesI;
 	
+	public String firstname, lastname, nrTel, birthday, adresa, username, email;
+	
 	MessageDigest md ;
 	
 	boolean onClickChangeText[] = {true,true,true,true,true, true, true};
@@ -54,9 +56,17 @@ public class PFMAccountManagment extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PFMAccountManagment() {
+	public PFMAccountManagment(int id, String _firstname, String _lastname, String _nrTel, String _birthday, String _adresa, String _username, String _email) {
 		
 		Connection DBconn = DBconnection.sqlConnector();
+		
+		firstname = _firstname;
+		lastname = _lastname;
+		nrTel = _nrTel;
+		birthday = _birthday;
+		adresa = _adresa;
+		username = _username;
+		email = _email;
 		
 		setPreferredSize(new Dimension(1592, 770));
 		setBackground(new Color(0, 102, 153));
@@ -105,7 +115,7 @@ public class PFMAccountManagment extends JPanel {
 			public void mouseClicked(MouseEvent arg0) {
 				if(onClickChangeText[0] == true)
 				{
-					txtEmri.setText(Login.name);
+					txtEmri.setText(firstname);
 					onClickChangeText[0] = false;
 				}
 			}
@@ -123,7 +133,7 @@ public class PFMAccountManagment extends JPanel {
 				
 				if(onClickChangeText[1] == true)
 				{
-					txtMbiemri.setText(Login.surname);
+					txtMbiemri.setText(lastname);
 					onClickChangeText[1] = false;
 				}
 				
@@ -143,7 +153,7 @@ public class PFMAccountManagment extends JPanel {
 				
 				if(onClickChangeText[2] == true)
 				{
-					txtNrTel.setText(Login.teliii);
+					txtNrTel.setText(nrTel);
 					onClickChangeText[2] = false;
 				}
 				
@@ -161,7 +171,7 @@ public class PFMAccountManagment extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if(onClickChangeText[3] == true)
 				{
-					txtBirthday.setText(Login.birthday);
+					txtBirthday.setText(birthday);
 					onClickChangeText[3] = false;
 				}
 			}
@@ -178,7 +188,7 @@ public class PFMAccountManagment extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if(onClickChangeText[4] == true)
 				{
-					txtAdresa.setText(Login.adresa);
+					txtAdresa.setText(adresa);
 					onClickChangeText[4] = false;
 				}
 			}
@@ -234,7 +244,7 @@ public class PFMAccountManagment extends JPanel {
 				
 				if(onClickChangeText[5] == true)
 				{
-					txtUsername.setText(Login.useriii);
+					txtUsername.setText(username);
 					onClickChangeText[5] = false;
 				}
 				
@@ -252,7 +262,7 @@ public class PFMAccountManagment extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if(onClickChangeText[6] == true)
 				{
-					txtEmail.setText(Login.emailiii);
+					txtEmail.setText(email);
 					onClickChangeText[6] = false;
 				}
 			}
@@ -277,22 +287,18 @@ public class PFMAccountManagment extends JPanel {
 		
 		btnSaveChangesI = new JButton("SAVE CHANGES");
 		btnSaveChangesI.setForeground(Color.WHITE);
-		btnSaveChangesI.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnSaveChangesI.setBackground(new Color(0, 102, 153));
 		btnSaveChangesI.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnSaveChangesI.setBounds(444, 558, 201, 56);
 		pnlIdentification.add(btnSaveChangesI);
 		
-		PromptSupport.setPrompt(Login.name, txtEmri);
-		PromptSupport.setPrompt(Login.surname, txtMbiemri);
-		PromptSupport.setPrompt(Login.teliii, txtNrTel);
-		PromptSupport.setPrompt(Login.adresa, txtAdresa);
-		PromptSupport.setPrompt(Login.birthday, txtBirthday);
-		PromptSupport.setPrompt(Login.emailiii, txtEmail);
-		PromptSupport.setPrompt(Login.useriii, txtUsername);
+		PromptSupport.setPrompt(firstname, txtEmri);
+		PromptSupport.setPrompt(lastname, txtMbiemri);
+		PromptSupport.setPrompt(nrTel, txtNrTel);
+		PromptSupport.setPrompt(adresa, txtAdresa);
+		PromptSupport.setPrompt(birthday, txtBirthday);
+		PromptSupport.setPrompt(email, txtEmail);
+		PromptSupport.setPrompt(username, txtUsername);
 
 		txtNrTel.addKeyListener(new KeyAdapter() {
 			@Override
@@ -323,13 +329,11 @@ public class PFMAccountManagment extends JPanel {
 				int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure you want to save changes?","Warning",dialogButton);
 				if(dialogResult == JOptionPane.YES_OPTION){
 					
-					boolean saveChanges = true;
-					
-					String Emri = Login.name;
-					String Mbiemri = Login.surname;
-					String Birthday = Login.birthday;
-					String NrTel = Login.teliii;
-					String Adresa = Login.adresa;
+					String Emri = firstname;
+					String Mbiemri = lastname;
+					String Birthday = birthday;
+					String NrTel = nrTel;
+					String Adresa = adresa;
 					
 					if(!txtEmri.getText().equals(""))
 					{
@@ -356,23 +360,39 @@ public class PFMAccountManagment extends JPanel {
 						Birthday = txtBirthday.getText();
 					}
 					
-					if(saveChanges)
-					{
-					
-						String inserto = "{call PersonalInformation('"+Login.id+"','"+Emri+"','"+Mbiemri+"','"+NrTel+"','"+Birthday+"','"+Adresa+"')}";
+					String inserto = "{call PersonalInformation('"+id+"','"+Emri+"','"+Mbiemri+"','"+NrTel+"','"+Birthday+"','"+Adresa+"')}";
 						
-						try {
-							CallableStatement insert = DBconn.prepareCall(inserto);
-							insert.execute();
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+					try {
+						CallableStatement insert = DBconn.prepareCall(inserto);
+						insert.execute();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					else
+					txtEmri.setText("");
+					txtMbiemri.setText("");
+					txtNrTel.setText("");
+					txtAdresa.setText("");
+					txtBirthday.setText("");
+					
+					PromptSupport.setPrompt(Emri, txtEmri);
+					PromptSupport.setPrompt(Mbiemri, txtMbiemri);
+					PromptSupport.setPrompt(NrTel, txtNrTel);
+					PromptSupport.setPrompt(Adresa, txtAdresa);
+					PromptSupport.setPrompt(Birthday, txtBirthday);
+					
+					for(int i=0; i< onClickChangeText.length; i++)
 					{
-						JOptionPane.showMessageDialog(null, "Something went wrong. Check the format of your changes!");
+						onClickChangeText[i] = true;
 					}
+					
+					firstname = Emri;
+					lastname = Mbiemri;
+					birthday = Birthday;
+					nrTel = NrTel;
+					adresa = Adresa;
+					
+					JOptionPane.showMessageDialog(null, "Succesfully updated your personal data.");
 					
 					}		
 			}
@@ -387,59 +407,117 @@ public class PFMAccountManagment extends JPanel {
 				int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure you want to save changes?","Warning",dialogButton);
 				if(dialogResult == JOptionPane.YES_OPTION)
 				{
+					String newUsername = username;
+					String newEmail = email;
 					
-					int Shtesa= 100000+ (int)(Math.random() *2000000);
-					String pass = txtPassword.getText()+String.valueOf(Shtesa);
-					
-					try 
+					if(!txtEmail.getText().equals(""))
 					{
-						md = MessageDigest.getInstance("SHA1");
-					} 
-					catch (NoSuchAlgorithmException q) 
-					{
-						// TODO Auto-generated catch block
-						q.printStackTrace();
+						newEmail = txtEmail.getText();
 					}
 					
-					try 
-					  {
-						byte[] byteSaltPassword = pass.getBytes("UTF8");
-						byte[] byteSaltedHash = md.digest(byteSaltPassword);
-						byte[] encodedBytes = java.util.Base64.getEncoder().encode(byteSaltedHash);
-						pass=new String(encodedBytes);
-						
-					  } 
-					  catch (UnsupportedEncodingException e1)
-					  {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						
-					  }
-					
-					String inserto = "{call Identification('"+Login.id+"','"+txtEmail.getText().toString()+"','"+txtUsername.getText().toString()+"','"+Shtesa+"','"+pass+"')}";
-					
-					try 
+					if(!txtUsername.getText().equals(""))
 					{
-						CallableStatement insert = DBconn.prepareCall(inserto);
-						insert.execute();
-					} catch (SQLException p) 
-					{
-						// TODO Auto-generated catch block
-						p.printStackTrace();
+						newUsername = txtUsername.getText();
 					}
 					
-					String id=txtEmail.getText().toString();             
-			        String[] to={id};
 					
-					if(EmailSender.sendMail("noreplyknk@gmail.com","knkproject2017","Your Password has changed successfully.\n\nDate: '"+new Date()+"' \n with respect,\nBigBoysTeam " ,to,"Changed password!"))
-		         	{
-		             
-		         	}
-					else 
-		         	{        
-		        	JOptionPane.showMessageDialog(null,"Connection Failed!!! Please try again Later after Connecting to the internet...");
-		         	}
-				
+					if(!txtPassword.getText().equals(""))
+					{
+						
+						if(txtPassword.getText().equals(txtConfirmPassA.getText()))
+						{
+							int Shtesa= 100000+ (int)(Math.random() *2000000);
+							String pass = txtPassword.getText()+String.valueOf(Shtesa);
+							
+							try 
+							{
+								md = MessageDigest.getInstance("SHA1");
+							} 
+							catch (NoSuchAlgorithmException q) 
+							{
+								// TODO Auto-generated catch block
+								q.printStackTrace();
+							}
+							
+							try 
+							  {
+								byte[] byteSaltPassword = pass.getBytes("UTF8");
+								byte[] byteSaltedHash = md.digest(byteSaltPassword);
+								byte[] encodedBytes = java.util.Base64.getEncoder().encode(byteSaltedHash);
+								pass=new String(encodedBytes);
+								
+							  } 
+							  catch (UnsupportedEncodingException e1)
+							  {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+								
+							  }
+
+							
+							String updateAccountIdentification = "{call Identification('"+id+"','"+newEmail+"','"+newUsername+"','"+Shtesa+"','"+pass+"')}";
+							
+							try 
+							{
+								CallableStatement insert = DBconn.prepareCall(updateAccountIdentification);
+								insert.execute();
+							} catch (SQLException p) 
+							{
+								// TODO Auto-generated catch block
+								p.printStackTrace();
+							}
+							
+							
+							JOptionPane.showMessageDialog(null, "Succesfully updated your identification data.");
+							txtPassword.setText("");
+							txtEmail.setText("");
+							txtUsername.setText("");
+							txtConfirmPassA.setText("");
+							
+							PromptSupport.setPrompt(newEmail, txtEmail);
+							PromptSupport.setPrompt(newUsername, txtUsername);
+							
+							for(int i=0; i< onClickChangeText.length; i++)
+							{
+								onClickChangeText[i] = true;
+							}
+							
+							email = newEmail;
+							username = newUsername;
+							
+						
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(null, "Password doesn't match!");
+						}
+						
+						
+					}
+					else
+					{
+						String updateAccountIdentification = "{call updateEmailUsername('"+id+"','"+newEmail+"','"+newUsername+"')}";
+						
+						try 
+						{
+							CallableStatement insert = DBconn.prepareCall(updateAccountIdentification);
+							insert.execute();
+							JOptionPane.showMessageDialog(null, "Succesfully updated your identification data.");
+						} catch (SQLException p) 
+						{
+							// TODO Auto-generated catch block
+							p.printStackTrace();
+						}
+						txtEmail.setText("");
+						txtUsername.setText("");
+						
+						PromptSupport.setPrompt(newEmail, txtEmail);
+						PromptSupport.setPrompt(newUsername, txtUsername);
+					}
+
+						
+					
+					
 				}
 				
 			
