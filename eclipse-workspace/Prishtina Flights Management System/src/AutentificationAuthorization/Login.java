@@ -17,10 +17,12 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -45,6 +47,7 @@ import java.awt.event.KeyEvent;
 
 import SharedPackage.*;
 import GeneralUserInterface.*;
+import java.awt.Toolkit;
 
 public class Login extends JFrame {
 
@@ -54,17 +57,17 @@ public class Login extends JFrame {
 	private JTextField txtTemp;
 	
 	String useri = "", passi = "";
-	public static String name ="" , surname="";
+	public String name ="" , surname="";
 	MessageDigest md ;
-	static String gjuha="English";
+	String gjuha="English";
 	
-	public static int id;
-	public static String useriii = "";
-	public static String teliii="";
-	public static String emailiii="";
-	public static String birthday="";
-	public static String adresa= "";
-	public static int roli;
+	public int id;
+	public String useriii = "";
+	public String teliii="";
+	public String emailiii="";
+	public String birthday="";
+	public String adresa= "";
+	public int roli;
 	/**
 	 * Launch the application.
 	 */
@@ -85,6 +88,8 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		Image icon = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
+		setIconImage(icon);
 		setResizable(false);
 		
 		Connection DBconn = DBconnection.sqlConnector();		
@@ -151,10 +156,12 @@ public class Login extends JFrame {
 		
 		
 		
-		JLabel lblWelcome = new JLabel("");
-		lblWelcome.setForeground(Color.BLACK);
-		lblWelcome.setFont(new Font("Javanese Text", Font.PLAIN, 32));
-		lblWelcome.setBounds(118, 60, 248, 104);
+		JLabel lblWelcome = new JLabel("PFMS");
+		lblWelcome.setVerticalAlignment(SwingConstants.TOP);
+		lblWelcome.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWelcome.setForeground(new Color(0, 51, 153));
+		lblWelcome.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 47));
+		lblWelcome.setBounds(118, 83, 248, 81);
 		contentPane.add(lblWelcome);
 		
 		JLabel lblUsername = new JLabel("* You can't leave this empty!");
@@ -264,23 +271,20 @@ public class Login extends JFrame {
 							}
 							else if(rezi.first())
 							{
-								PFMSinterface pfms = new PFMSinterface(name, surname, roli);
+								PFMSinterface pfms = new PFMSinterface(id,name, surname, teliii, birthday, adresa, emailiii, useriii, roli);
 								pfms.setVisible(true);
 								pfms.setExtendedState(pfms.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 								
+							}
+							else
+							{
+								JOptionPane.showMessageDialog(null, "Error on your data validation!");
 							}
 						}
 						
 						else
 						{
-							if(gjuha == "Shqip")
-							{
-								JOptionPane.showMessageDialog(null, "Gabim ne emer te perdoruesit apo fjalekalim!");
-							}
-							else if(gjuha =="English")
-							{
-								JOptionPane.showMessageDialog(null, "Error on your data validation!");
-							}
+							JOptionPane.showMessageDialog(null, "Error on your data validation!");
 						}
 					} catch (UnsupportedEncodingException e) {
 						// TODO Auto-generated catch block
@@ -296,7 +300,7 @@ public class Login extends JFrame {
 		btnLogin.setForeground(Color.WHITE);
 		btnLogin.setFont(new Font("Segoe UI Emoji", Font.BOLD, 13));
 		btnLogin.setBorder(null);
-		btnLogin.setBackground(new Color(165,32,38));
+		btnLogin.setBackground(new Color(0,102,153));
 		btnLogin.setBounds(119, 398, 247, 36);
 		btnLogin.setFocusPainted(false);
 		contentPane.add(btnLogin);
@@ -319,7 +323,7 @@ public class Login extends JFrame {
 			}
 			public void mouseExited(MouseEvent e) 
 			{
-				lblForgot.setForeground(new Color(96,143,65));
+				lblForgot.setForeground(new Color(0,102,153));
 			}
 			@Override
 			public void mousePressed(MouseEvent arg0) {
@@ -329,7 +333,7 @@ public class Login extends JFrame {
 			}
 		});
 		lblForgot.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblForgot.setForeground(new Color(70,184,50));
+		lblForgot.setForeground(new Color(0,102,153));
 		lblForgot.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblForgot.setBackground(Color.BLUE);
 		lblForgot.setBounds(219, 373, 147, 14);
@@ -348,7 +352,7 @@ public class Login extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) 
 			{
-				lblCreateAccount.setForeground(new Color(96,143,65));
+				lblCreateAccount.setForeground(new Color(0,102,153));
 			}
 			@Override
 			public void mousePressed(MouseEvent e) 
@@ -357,76 +361,9 @@ public class Login extends JFrame {
 			}
 		});
 		lblCreateAccount.setBounds(219, 351, 147, 14);
-		lblCreateAccount.setForeground(new Color(70,184,50));
+		lblCreateAccount.setForeground(new Color(0,102,153));
 		lblCreateAccount.setFont(new Font("Tahoma", Font.BOLD, 11));
 		contentPane.add(lblCreateAccount);
-		
-		JLabel lblShqip = new JLabel("Shqip");
-		
-		lblShqip.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent arg0)
-			{
-				lblShqip.setForeground(new Color(165,32,38));
-				lblShqip.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			}
-			public void mouseExited(MouseEvent e) 
-			{
-				lblShqip.setForeground(new Color(96,143,65));
-			}
-			@Override
-			public void mousePressed(MouseEvent arg0) 
-			{
-				gjuha = "Shqip";
-				
-				PromptSupport.setPrompt("Emri i perdoruesit", txtUsername);
-				PromptSupport.setPrompt("Fjalekalimi", txtPassword);	
-				
-				lblForgot.setText("Keni harruar fjalekalimin?");
-				lblCreateAccount.setText("Krijo llogari");
-				btnLogin.setText("Kyqu");
-				
-				lblUsername.setText("* Mos e le te zbrazet.");
-				lblPassword.setText("* Mos e le te zbrazet.");
-				
-			}
-		});
-		lblShqip.setBounds(25, 471, 39, 16);
-		lblShqip.setForeground(new Color(70,184,50));
-		contentPane.add(lblShqip);
-		
-		JLabel lblEnglish = new JLabel("English");
-		lblEnglish.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent arg0)
-			{
-				lblEnglish.setForeground(new Color(165,32,38));
-				lblEnglish.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			}
-			public void mouseExited(MouseEvent e) 
-			{
-				lblEnglish.setForeground(new Color(96,143,65));
-			}
-			@Override
-			public void mousePressed(MouseEvent arg0) 
-			{
-				gjuha ="English";
-				
-				PromptSupport.setPrompt("Username", txtUsername);
-				PromptSupport.setPrompt("Password", txtPassword);
-				
-				lblForgot.setText("Forgot Password?");
-				lblCreateAccount.setText("Create Account");
-				btnLogin.setText("Login");
-				
-				lblUsername.setText("* You can't leave this empty.");
-				lblPassword.setText("* You can't leave this empty.");
-				
-			}
-		});
-		lblEnglish.setForeground(new Color(70,184,50));
-		lblEnglish.setBounds(25, 490, 49, 16);
-		contentPane.add(lblEnglish);
 		
 		
 		

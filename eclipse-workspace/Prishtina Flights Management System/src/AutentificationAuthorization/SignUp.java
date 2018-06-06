@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -40,6 +41,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 
 import java.awt.event.MouseMotionAdapter;
+import java.awt.image.BufferedImage;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -92,6 +94,8 @@ public class SignUp extends JFrame {
 	 * Create the frame.
 	 */
 	public SignUp() {
+		Image icon = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
+		setIconImage(icon);
 		setResizable(false);
 		
 		Connection DBconn = DBconnection.sqlConnector();		
@@ -327,7 +331,7 @@ public class SignUp extends JFrame {
 		JButton btnNext = new JButton("Next");
 		
 		btnNext.setForeground(Color.WHITE);
-		btnNext.setBackground(new Color(165,32,38));
+		btnNext.setBackground(new Color(0,51,153));
 		btnNext.setBounds(80, 442, 304, 36);
 		btnNext.setFocusPainted(false);
 		Personal.add(btnNext);
@@ -534,7 +538,7 @@ public class SignUp extends JFrame {
 
 		JButton btnRegister = new JButton("Register");
 		btnRegister.setForeground(Color.WHITE);
-		btnRegister.setBackground(new Color(165,32,38));
+		btnRegister.setBackground(new Color(0,51,153));
 		btnRegister.setBounds(88, 436, 304, 36);
 		btnRegister.setFocusPainted(false);
 		Identification.add(btnRegister);
@@ -545,7 +549,6 @@ public class SignUp extends JFrame {
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				
 				
 				if(txtName.getText().equals(""))
 				{
@@ -616,27 +619,14 @@ public class SignUp extends JFrame {
 				if(((txtUsernameReg.getText().length() < 3) || (txtUsernameReg.getText().length() >30)) && (txtUsernameReg.getText().length()!=0))
 				{
 					txtUsernameReg.setBorder(new MatteBorder(0, 0, 1, 0, Color.red));
-					if(Login.gjuha == "Shqip")
-					{
-						lblUsernameVal.setText("* Emri i perdoruesit te jete mes 3 dhe 30 karaktere");		
-					}
-					else
-					{
-						lblUsernameVal.setText("* Username must be between 3 and 30 characters");		
-					}
+					lblUsernameVal.setText("* Username must be between 3 and 30 characters");		
+					
 								
 				}
 				else if (txtUsernameReg.getText().equals(""))
 				{
-					txtUsernameReg.setBorder(new MatteBorder(0, 0, 1, 0, Color.red));
-					if(Login.gjuha == "Shqip")
-					{
-						lblUsernameVal.setText("* Mos e le te zbrazet.");
-					}
-					else
-					{
-						lblUsernameVal.setText("* You can't leave this empty.");
-					}
+					lblUsernameVal.setText("* You can't leave this empty.");
+					
 				}
 				else
 				{
@@ -659,15 +649,8 @@ public class SignUp extends JFrame {
 						{
 							txtUsernameReg.setBorder(new MatteBorder(0, 0, 1, 0, Color.red));
 							
+							lblUsernameVal.setText("* Username is already taken!");
 							
-							if(Login.gjuha == "Shqip")
-							{
-								lblUsernameVal.setText("* Emri i perdoruesit eshte i zene!");
-							}
-							else
-							{
-								lblUsernameVal.setText("* Username is already taken!");
-							}
 						}
 					} 
 					catch (SQLException e) 
@@ -687,27 +670,17 @@ public class SignUp extends JFrame {
 				if (!regMatcher.matches() && !(txtEmailReg.getText().equals("")))
 				{
 					txtEmailReg.setBorder(new MatteBorder(0, 0, 1, 0, Color.red));
-					if(Login.gjuha == "Shqip")
-					{
-						lblEmailVal.setText("* Format i gabuar");	
-					}
-					else
-					{
-						lblEmailVal.setText("* Wrong Format");	
-					}
+
+					lblEmailVal.setText("* Wrong Format");	
+
 						
 				}
 				else if (txtEmailReg.getText().equals(""))
 				{
 					txtEmailReg.setBorder(new MatteBorder(0, 0, 1, 0, Color.red));
-					if(Login.gjuha == "Shqip")
-					{
-						lblEmailVal.setText("* Mos e le te zbrazet.");	
-					}
-					else
-					{
-						lblEmailVal.setText("* You can't leave this empty.");
-					}
+					
+					lblEmailVal.setText("* You can't leave this empty.");
+					
 										
 				}
 				else
@@ -729,14 +702,9 @@ public class SignUp extends JFrame {
 						else
 						{
 							txtEmailReg.setBorder(new MatteBorder(0, 0, 1, 0, Color.red));
-							if(Login.gjuha == "Shqip")
-							{
-								lblEmailVal.setText("* Adresa elektronike ka nje llogari.");	
-							}
-							else
-							{
-								lblEmailVal.setText("* Email already has an account!");
-							}
+
+							lblEmailVal.setText("* Email already has an account!");
+							
 							
 						}
 												
@@ -755,27 +723,17 @@ public class SignUp extends JFrame {
 				if (((txtPasswordReg.getPassword().length < 3) || (txtPasswordReg.getPassword().length >20)) && (txtPasswordReg.getPassword().length!=0))
 				{
 					txtPasswordReg.setBorder(new MatteBorder(0, 0, 1, 0, Color.red));
-					if(Login.gjuha == "Shqip")
-					{
-						lblPasswordVal.setText("* Fjalekalimi le te jete mes 3 dhe 20 karaktere");
-					}
-					else
-					{
-						lblPasswordVal.setText("* Password must be between 3 and 20 characters");
-					}
+					
+					lblPasswordVal.setText("* Password must be between 3 and 20 characters");
+					
 					
 				}
 				else if (txtPasswordReg.getPassword().length == 0)
 				{
 					txtPasswordReg.setBorder(new MatteBorder(0, 0, 1, 0, Color.red));
-					if(Login.gjuha == "Shqip")
-					{
-						lblPasswordVal.setText("* Mos e le te zbrazet.");
-					}
-					else
-					{
-						lblPasswordVal.setText("* You can't leave this empty.");
-					}
+
+					lblPasswordVal.setText("* You can't leave this empty.");
+					
 					
 				}
 				else
@@ -816,27 +774,12 @@ public class SignUp extends JFrame {
 				if (!(Arrays.equals(txtRePasswordReg.getPassword(), txtPasswordReg.getPassword())) && !(txtRePasswordReg.getPassword().length == 0))
 				{
 					txtRePasswordReg.setBorder(new MatteBorder(0, 0, 1, 0, Color.red));
-					if(Login.gjuha == "Shqip")
-					{
-						lblRePasswordVal.setText("* Fjalekalimet nuk perputhen!");
-					}
-					else
-					{
-						lblRePasswordVal.setText("* Confirmation password doesn't match!");
-					}
-					
+					lblRePasswordVal.setText("* Confirmation password doesn't match!");
+						
 				}
 				else if (txtRePasswordReg.getPassword().length == 0)
 				{
-					txtRePasswordReg.setBorder(new MatteBorder(0, 0, 1, 0, Color.red));
-					if(Login.gjuha == "Shqip")
-					{
-						lblRePasswordVal.setText("* Mos e le te zbrazet.");
-					}
-					else
-					{
-						lblRePasswordVal.setText("* You can't leave this empty.");
-					}
+					lblRePasswordVal.setText("* You can't leave this empty.");
 					
 				}
 				else
@@ -867,35 +810,6 @@ public class SignUp extends JFrame {
 		});
 		setLocationRelativeTo(null);
 		
-		if(Login.gjuha=="Shqip")
-		{
-			tabbedPane.setTitleAt(0, "Personale");
-			tabbedPane.setTitleAt(1, "Identifikimi");
-			
-			lblName.setText("Emri");
-			lblSurname.setText("Mbiemri");
-			lblBirthday.setText("Datelindja");
-			lblYear.setText("Viti:");
-			lblMonth.setText("Muaji:");
-			lblDay.setText("Dita:");
-			lblAddress.setText("Adresa");
-			btnNext.setText("Vazhdo");
-			lblGender.setText("Gjinia");
-			
-			lblEmpty.setText("* Mos e le te zbrazet.");
-			lblEmpty2.setText("* Mos e le te zbrazet.");
-			lblEmpty3.setText("* Mos e le te zbrazet.");
-			lblEmpty5.setText("* Mos e le te zbrazet.");
-			
-			lblUsernameReg.setText("Emri i perdoruesit");
-			lblEmailReg.setText("Adresa elektronike");
-			lblPasswordReg.setText("Fjalekalimi");
-			lblConfirmPasswordReg.setText("Konfirmo fjalekalimin");
-			
-			cmbMonth.setModel(new DefaultComboBoxModel(new String[]{"Janar","Shkurt","Mars","Prill","Maj","Qershor","Korrik","Gusht","Shtator","Tetor","Nentor","Dhjetor"}));
-			
-			btnRegister.setText("Regjistrohu");
-		}
 		
 	}
 }

@@ -65,34 +65,20 @@ public class ForgotPassword extends JFrame {
 	         
 	         String id=emailid;             
 	         String[] to={id}; 
-	         if(Login.gjuha=="English")
-	         {
-		         if(EmailSender.sendMail("noreplyknk@gmail.com","knkproject2017","Use this code to reset your password "+code+" . Do not forward or give this code to anyone.\n\n The HCI-PROJECT Accounts Team " ,to,"Change your password!"))
-		         	{
+	         if(EmailSender.sendMail("noreply.pfms@gmail.com","pfmsproject2018","Use this code to reset your password "+code+" . Do not forward or give this code to anyone.\n\n The PFMS-PROJECT Accounts Team " ,to,"Change your password!"))
+		     	{
 		             
-		         	}
-		         else 
-		         	{        
+		       	}
+		     else 
+		       	{        
 		        	JOptionPane.showMessageDialog(null,"Connection Failed!!! Please try again Later after Connecting to the internet...");
 	         	}
-	         }          
-	         else
-	         {
-	        	 if(EmailSender.sendMail("noreplyknk@gmail.com","knkproject2017","Perdoreni kete kod per te ndryshuar fjalekalimin "+code+" . Ruajeni per vete kete kod.\n\n Skuadra e HCI-projektit. " ,to, "Nderrone passwordin!"))
-		         	{
-		             
-		         	}
-		         else 
-		         	{        
-		        	JOptionPane.showMessageDialog(null,"Lidhja deshtoi!!! Provoni perseri pasi te lidheni ne rrjet...");
-	         	}
-	         }
 	                
 		  	}
 	                
 		  catch(Exception e)
 	        {
-	                    JOptionPane.showMessageDialog(null,e.toString());
+	                JOptionPane.showMessageDialog(null,e.toString());
 	        }
 	    }
 	  public void option1(String emailid,String date)
@@ -102,35 +88,21 @@ public class ForgotPassword extends JFrame {
 	                
 	         String id=emailid;             
 	         String[] to={id}; 
-	         if(Login.gjuha=="English")
-	         {
-		         if(EmailSender.sendMail("noreplyknk@gmail.com","knkproject2017","The password for your HCI-PROJECT Account "+id +" was recently changed\n\nDate : "+date+"\n\nThe HCI-PROJECT Accounts Team " ,to,"Your password changed!"))
-		         	{
+	         
+		     if(EmailSender.sendMail("noreply.pfms@gmail.com","pfmsproject2018","The password for your PFMS-PROJECT Account "+id +" was recently changed\n\nDate : "+date+"\n\nThe PFMS-PROJECT Accounts Team " ,to,"Your password changed!"))
+		         {
 		             
-		         	}
-		         else 
-		         	{        
+		         }
+		     else 
+		         {        
 		        	JOptionPane.showMessageDialog(null,"Connection Failed!!! Please try again Later after Connecting to the internet...");
-		         	}
-	         }
-	         else
-	         {
-	        	 if(EmailSender.sendMail("noreplyknk@gmail.com","knkproject2017","Fjalekalimi per llogarine tuaj ne Projektin HCI "+id +" eshte ndryshuar rishtazi\n\nDate : "+date+"\n\nSkuadra e HCI " ,to,"Fjalekalimi juaj u ndryshua!"))
-		         	{
-		             
-		         	}
-		         else 
-		         	{        
-		        	JOptionPane.showMessageDialog(null,"Lidhja deshtoi!!! Ju lutem provoni perseri pasi te lidheni me rrjet...");
-		         	}
-	         }
-	                    
+		         }         
 	                
 		  	}
 	                
 		  catch(Exception e)
 	        {
-	                    JOptionPane.showMessageDialog(null,e.toString());
+	          JOptionPane.showMessageDialog(null,e.toString());
 	        }
 	    }
 	        
@@ -225,11 +197,10 @@ public class ForgotPassword extends JFrame {
 		
 
 		JButton btnConfirmCode = new JButton("Reset Password");
-		btnConfirmCode.setBackground(new Color(165,32,38));
+		btnConfirmCode.setBackground(new Color(0, 102, 153));
 		btnConfirmCode.setForeground(Color.WHITE);
 		btnConfirmCode.setFont(new Font("Segoe UI Emoji", Font.BOLD, 13));
 		btnConfirmCode.setBorder(null);
-		btnConfirmCode.setBackground(new Color(165,32,38));
 		btnConfirmCode.setBounds(150, 332, 211, 36);
 		btnConfirmCode.setFocusPainted(false);
 		btnConfirmCode.setVisible(false);
@@ -237,17 +208,16 @@ public class ForgotPassword extends JFrame {
 		
 		JLabel lblchanged = new JLabel("Your password has been successfully changed");
 		lblchanged.setHorizontalAlignment(SwingConstants.LEFT);
-		lblchanged.setForeground(Color.RED);
+		lblchanged.setForeground(new Color(0, 102, 153));
 		lblchanged.setBounds(101, 390, 308, 27);
 		lblchanged.setVisible(false);
 		contentPane.add(lblchanged);
 		
 		JButton btnConfirm = new JButton("Send a code");
-		btnConfirm.setBackground(new Color(165,32,38));
+		btnConfirm.setBackground(new Color(0, 102, 153));
 		btnConfirm.setForeground(Color.WHITE);
 		btnConfirm.setFont(new Font("Segoe UI Emoji", Font.BOLD, 13));
 		btnConfirm.setBorder(null);
-		btnConfirm.setBackground(new Color(165,32,38));
 		btnConfirm.setBounds(151, 271, 211, 36);
 		btnConfirm.setFocusPainted(false);
 		btnConfirm.addActionListener(new ActionListener() {
@@ -262,27 +232,13 @@ public class ForgotPassword extends JFrame {
 				if (!regMatcher.matches() && !(email.equals("")))
 				{
 					txtemail.setBorder(new MatteBorder(0, 0, 1, 0, Color.red));
-					if(Login.gjuha=="Shqip")
-					{
-						JOptionPane.showMessageDialog(null, "FORMAT I GABUAR");
-					}
-					else
-					{
-						JOptionPane.showMessageDialog(null, "WRONG FORMAT");
-					}
+					JOptionPane.showMessageDialog(null, "WRONG FORMAT");
 					
 				}
 				else if (txtemail.getText().equals(""))
 				{
 					txtemail.setBorder(new MatteBorder(0, 0, 2, 0, Color.red));
-					if(Login.gjuha=="Shqip")
-					{
-						lblEmailVal.setText("* Mos e le te zbrazet.");	
-					}
-					else
-					{
-						lblEmailVal.setText("* You can't leave this empty.");	
-					}
+					lblEmailVal.setText("* You can't leave this empty.");	
 									
 				}
 				else
@@ -325,14 +281,9 @@ public class ForgotPassword extends JFrame {
 											CallableStatement FP = DBconn.prepareCall(forgotpassword);
 											FP.execute();
 											option(email,code);
-											if(Login.gjuha=="Shqip")
-											{
-												lblEmail.setText("Shiko ne adresen elektronike per kodin");
-											}
-											else
-											{
-												lblEmail.setText("Check your email for your code");
-											}
+											
+											lblEmail.setText("Check your email for your code");
+											
 											
 											lblEmail.setBounds(151, 185, 231, 28);
 											txtemail.setVisible(false);
@@ -361,17 +312,9 @@ public class ForgotPassword extends JFrame {
 							}
 							else
 							{
-									txtemail.setBorder(new MatteBorder(0, 0, 1, 0, Color.red));
-									lblEmailVal.setText("");
-									if(Login.gjuha=="Shqip")
-									{
-										lblEmailVal.setText("Adresa elektronike nuk ekziston");
-									}
-									else
-									{
-										lblEmailVal.setText("This email doesn't exists");
-									}
-									
+								txtemail.setBorder(new MatteBorder(0, 0, 1, 0, Color.red));
+								lblEmailVal.setText("");
+								lblEmailVal.setText("This email doesn't exists");
 							}
 							}
 						
@@ -505,14 +448,8 @@ public class ForgotPassword extends JFrame {
 						else
 						{
 							lblErrorCode.setVisible(true);
-							if(Login.gjuha=="Shqip")
-							{
-								lblErrorCode.setText("Kodi i gabuar");
-							}
-							else
-							{
-								lblErrorCode.setText("Incorrent code");
-							}
+						
+							lblErrorCode.setText("Incorrent code");
 							
 							//JOptionPane.showMessageDialog(null, "Incorrent code");
 						}
@@ -544,13 +481,5 @@ public class ForgotPassword extends JFrame {
 		
 		
 		setLocationRelativeTo(null);
-		
-		if(Login.gjuha=="Shqip")
-		{
-			lblEmail.setText("Shkruaj adresen elektronike");
-			btnConfirm.setText("Dergo kodin");
-			btnConfirmCode.setText("Ndrysho fjalekalimin");
-			lblchanged.setText("Fjalekalimi eshte ndryshuar me sukses");
-		}
 	}
 }
